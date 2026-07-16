@@ -1,4 +1,3 @@
-Version 1.0
 # Merge Kingdom — Multi-File Project
 
 A structured, professional rebuild of the Merge Kingdom browser game.
