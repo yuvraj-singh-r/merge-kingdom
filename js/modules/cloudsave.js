@@ -29,3 +29,52 @@ async function saveToCloud() {
     }
 
 }
+
+"use strict";
+
+/* ============================================================
+   CLOUD SAVE MODULE - STEP 1
+   ============================================================ */
+
+function getCloudDoc() {
+    ...
+}
+
+async function saveToCloud() {
+
+    ...
+
+}
+
+// 👇 IS LINE KE NICHE PASTE KARNA HAI
+
+async function loadFromCloud() {
+
+    const docRef = getCloudDoc();
+
+    const snap = await docRef.get();
+
+    if (!snap.exists) {
+        if (typeof toast === "function") {
+            toast("No cloud save found.");
+        }
+        return;
+    }
+
+    const data = snap.data();
+
+    if (!data.state) {
+        return;
+    }
+
+    state = data.state;
+
+    save();
+
+    if (typeof toast === "function") {
+        toast("☁️ Cloud Save Loaded");
+    }
+
+    location.reload();
+
+}
