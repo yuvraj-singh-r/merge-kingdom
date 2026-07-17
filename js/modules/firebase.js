@@ -57,6 +57,7 @@ function initFirebase(){
   try{
     window.firebaseApp = firebase.initializeApp(firebaseConfig);
     window.firebaseAuth = firebase.auth();
+    window.firebaseDB = firebase.firestore();
     firebaseReady = true;
     return true;
   }catch(e){
