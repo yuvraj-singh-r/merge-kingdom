@@ -348,3 +348,4 @@ footer.credits{text-align:center; color:var(--text-dim); font-size:11px; padding
 .auth-name{font-weight:700; font-size:13px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:180px;}
 .auth-email{font-size:11px; color:var(--text-dim); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:180px;}
 .auth-btn{padding:7px 14px; font-size:12px;}
+.cloud-status{font-size:11px; color:var(--text-dim); white-space:nowrap;}

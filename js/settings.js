@@ -23,7 +23,8 @@ function setTheme(t){
   save();
 }
 document.getElementById("btnCloud").addEventListener("click",()=>{
-  toast("☁️ Cloud save coming soon — your kingdom is safe on this device.");
+  if(typeof manualCloudSync==="function") manualCloudSync();
+  else toast("☁️ Cloud save coming soon — your kingdom is safe on this device.");
 });
 document.getElementById("btnReset").addEventListener("click",()=>{
   showModal("⚠️","Reset Kingdom?","This will permanently erase your entire kingdom. This cannot be undone.",
