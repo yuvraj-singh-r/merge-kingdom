@@ -8,11 +8,14 @@ function defaultState(){
   return {
     board:new Array(36).fill(null),
     queue:[],
-    coins:100, lifetimeCoins:100, xp:0, level:1, score:0,
+    coins:100, lifetimeCoins:100, gems:0, xp:0, level:1, score:0,
     totalMerges:0, maxTier:{}, buildings:{}, upgrades:{},
     questsProgress:{}, questsClaimed:[], achievementsUnlocked:[],
     collection:[], specialsFound:[],
     dailyStreak:0, lastDailyClaim:0,
+    dailyReward:{ currentDay:1, lastClaimDate:null, streak:0, canClaim:false },
+    shop:{ purchaseHistory:[] },
+    dailyQuests:{ generatedAt:0, questIds:[], claimed:[], baseline:{merges:0,coinsEarned:0,buildingsBuilt:0} },
     settings:{music:true,sound:true,theme:"dark"},
     lastSeen:Date.now(), spawnReady:true, spawnNext:0,
     createdAt:Date.now(), playSeconds:0
@@ -62,7 +65,10 @@ function load(){
       maxTier:Object.assign({},d.maxTier,parsed.maxTier),
       buildings:Object.assign({},d.buildings,parsed.buildings),
       upgrades:Object.assign({},d.upgrades,parsed.upgrades),
-      settings:Object.assign({},d.settings,parsed.settings)
+      settings:Object.assign({},d.settings,parsed.settings),
+      dailyReward:Object.assign({},d.dailyReward,parsed.dailyReward),
+      shop:Object.assign({},d.shop,parsed.shop),
+      dailyQuests:Object.assign({},d.dailyQuests,parsed.dailyQuests)
     });
   }catch(e){ return null; }
 }

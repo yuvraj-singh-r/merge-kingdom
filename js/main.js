@@ -24,6 +24,7 @@ function tick(){
   updateSpawnerUI();
   state.playSeconds++;
   checkDailyAvailable();
+  ensureDailyQuests();
   if(document.querySelector(".tabbtn[data-tab='build'].active")) renderBuildings();
 }
 function startLoops(){

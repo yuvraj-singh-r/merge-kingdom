@@ -348,9 +348,9 @@ the foundation for the reserved modules (auth, billing, cloud save)
 and hold it to that standard now:
 
 - **Never trust client-side state for anything that will eventually
-  have real value.** Coins/diamonds/purchases computed and stored
-  client-side today are fine for a local save; once `billing.js` /
-  `diamonds.js` exist, any purchased-currency balance must be
+  have real value.** Coins/gems/purchases computed and stored
+  client-side today are fine for a local save; once `billing.js`
+  exists, any purchased-currency balance must be
   verified server-side before being treated as authoritative —
   client `state` is a cache, not a source of truth, for paid
   currency.
@@ -415,24 +415,25 @@ the reserved modules below.
 
 ### Reserved future modules
 
-The following files are **reserved** in `js/modules/`. Each exists
-today only as a documented stub (a header comment describing its
-future responsibility) — **none are implemented, and none are
-included via `<script>` in `index.html` yet.** They must not affect
-current gameplay in any way until deliberately built out.
+The following files live in `js/modules/`. Each started as a
+documented stub (a header comment describing its future
+responsibility); some have since been deliberately implemented and
+wired in via `<script>` in `index.html` — see the Status column.
+Files still marked **Reserved** must not affect current gameplay in
+any way until deliberately built out, following this same procedure.
 
-| File | Future responsibility |
-|---|---|
-| `auth.js` | Player identity: sign-in/sign-out flow, session/token handling, linking a device save to an account. Must not replace `localStorage` as the primary save — see `cloudsave.js`. |
-| `firebase.js` | Firebase SDK initialization and shared client config (the app's public web config). Other reserved modules (`auth.js`, `cloudsave.js`, `leaderboard.js`, `analytics.js`) will depend on this, not the other way around. |
-| `cloudsave.js` | Sync `state` to/from a remote backend. Must read/write through the *existing* `save()`/`load()` shape in `state.js` rather than defining a parallel save format. Local save stays authoritative on conflict unless the player chooses otherwise (Section 7). |
-| `shop.js` | Storefront UI/logic for spending or purchasing currency on cosmetics, boosts, or content. Integrates with `state` via a new `state.shop` namespace; must reuse `panels.js`'s tab pattern for its UI, not invent a new one. |
-| `diamonds.js` | A second, premium currency parallel to `coins`. Gets its own `state.diamonds` balance and its own economy helpers mirroring `economy.js` (`addDiamonds`, `spendDiamonds`) rather than overloading the existing coin functions. |
-| `billing.js` | Real-money purchase flow (IAP / web payments) that grants `diamonds` or other entitlements. Any balance it grants must eventually be server-verified (Section 10) before being spendable. |
-| `ads.js` | Rewarded/interstitial ad integration (e.g. bonus coins for a rewarded ad). Sandboxed per Section 10; must call into `economy.js`'s existing `addCoins`/`addXP` rather than mutating `state.coins` directly. |
-| `leaderboard.js` | Global/friends leaderboard UI and submission logic, likely backed by `firebase.js`. Read-only display data must be sanitized per Section 10 before rendering. |
-| `playgames.js` | Google Play Games (or equivalent platform) sign-in, achievements, and cloud save bridging. Should delegate to `auth.js`/`cloudsave.js` rather than re-implementing sign-in or sync. |
-| `analytics.js` | Event tracking for gameplay/business metrics. Must be call-only (fire-and-forget events) and must never gate or alter gameplay logic based on analytics state. |
+| File | Status | Responsibility |
+|---|---|---|
+| `auth.js` | Implemented | Player identity: sign-in/sign-out flow, session/token handling, linking a device save to an account. Does not replace `localStorage` as the primary save — see `cloudsave.js`. |
+| `firebase.js` | Implemented | Firebase SDK initialization and shared client config (the app's public web config). Other modules (`auth.js`, `cloudsave.js`, `leaderboard.js`, `analytics.js`) depend on this, not the other way around. |
+| `cloudsave.js` | Implemented | Syncs `state` to/from Firestore. Reads/writes through the *existing* `save()`/`load()` shape in `state.js` rather than a parallel save format. Local save stays authoritative on conflict unless the player chooses otherwise (Section 7). |
+| `diamonds.js` | Implemented | The second, premium currency parallel to `coins`. Shipped as **Gems** — `state.gems` plus `addGems()`, `spendGems()`, `hasEnoughGems()` — rather than this row's originally-planned `diamonds` naming below. Mirrors `economy.js`'s pattern instead of overloading the existing coin functions. No shop/billing integration yet. |
+| `shop.js` | Implemented | Storefront popup with Coin Packs / Gem Packs / Special Items, opened from a new `#btnShop` icon button in the top nav. Ships as a hand-rolled overlay (matching the existing `openDailyWheel()` / Daily Reward popup precedent) rather than this row's originally-planned tab — see the note in the file's own header. Integrates with `state` via `state.shop.purchaseHistory`, reserved for a future `billing.js` to record verified purchases into. Purchasing itself is not implemented yet; `purchaseItem()` is the single stub hook future billing wires into. |
+| `billing.js` | Reserved | Real-money purchase flow (IAP / web payments) that grants gems or other entitlements. Any balance it grants must eventually be server-verified (Section 10) before being spendable. |
+| `ads.js` | Reserved | Rewarded/interstitial ad integration (e.g. bonus coins for a rewarded ad). Sandboxed per Section 10; must call into `economy.js`'s existing `addCoins`/`addXP` rather than mutating `state.coins` directly. |
+| `leaderboard.js` | Reserved | Global/friends leaderboard UI and submission logic, likely backed by `firebase.js`. Read-only display data must be sanitized per Section 10 before rendering. |
+| `playgames.js` | Reserved | Google Play Games (or equivalent platform) sign-in, achievements, and cloud save bridging. Should delegate to `auth.js`/`cloudsave.js` rather than re-implementing sign-in or sync. |
+| `analytics.js` | Reserved | Event tracking for gameplay/business metrics. Must be call-only (fire-and-forget events) and must never gate or alter gameplay logic based on analytics state. |
 
 **Until implemented, these files exist purely as documentation
 anchors** (see each file's header comment). Wiring any of them in is

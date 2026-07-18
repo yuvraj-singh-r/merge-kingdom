@@ -252,6 +252,7 @@ button{font-family:inherit; cursor:pointer;}
 }
 .card .buy:disabled{background:#555; color:#aaa; cursor:not-allowed;}
 .card .lockmsg{font-size:11px; color:var(--ruby); font-weight:700;}
+.card .price{font-size:12px; color:var(--gold); font-weight:700;}
 
 /* ---------- Quests / achievements ---------- */
 .qitem{
@@ -313,6 +314,47 @@ button{font-family:inherit; cursor:pointer;}
   transition:transform 3.5s cubic-bezier(.12,.75,.12,1);
 }
 .wheel .ptr{position:absolute; top:-16px; left:50%; transform:translateX(-50%); font-size:22px; z-index:5;}
+
+/* ---------- Daily Login Reward popup ---------- */
+.dr-modal{max-width:560px; position:relative; padding-top:30px;}
+.dr-close{
+  position:absolute; top:12px; right:12px; width:30px; height:30px; border-radius:50%;
+  border:1px solid var(--panel-border); background:var(--panel); color:var(--text);
+  font-size:14px; display:flex; align-items:center; justify-content:center; box-shadow:var(--shadow);
+}
+.dr-grid{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(70px,1fr)); gap:8px;
+  margin:16px 0 4px;
+}
+.dr-day{
+  background:var(--panel-2); border:1px solid var(--panel-border); border-radius:12px;
+  padding:10px 6px; text-align:center; opacity:.55;
+}
+.dr-daylabel{font-size:10px; color:var(--text-dim); font-weight:700; text-transform:uppercase; letter-spacing:.4px;}
+.dr-icon{font-size:24px; margin:6px 0 2px;}
+.dr-coins{font-size:11px; color:var(--gold); font-weight:700;}
+.dr-day.dr-locked{opacity:.4;}
+.dr-day.dr-claimed{opacity:1; border-color:var(--emerald); box-shadow:0 0 8px rgba(45,157,111,.3);}
+.dr-day.dr-current{
+  opacity:1; border-color:var(--gold-2);
+  animation:glow 1.6s ease-in-out infinite, pop .25s cubic-bezier(.34,1.56,.64,1);
+}
+.dr-actions{margin-top:14px;}
+.dr-actions .royal-btn{width:100%;}
+@media(min-width:760px){
+  .dr-grid{grid-template-columns:repeat(7,1fr);}
+}
+
+/* ---------- Shop popup ---------- */
+.shop-modal{max-width:640px; max-height:86vh; overflow-y:auto; position:relative; padding-top:30px;}
+.shop-close{
+  position:absolute; top:12px; right:12px; width:30px; height:30px; border-radius:50%;
+  border:1px solid var(--panel-border); background:var(--panel); color:var(--text);
+  font-size:14px; display:flex; align-items:center; justify-content:center; box-shadow:var(--shadow);
+}
+.shop-section{margin-top:16px; text-align:left;}
+.shop-section h3{color:var(--gold); font-size:14px; margin-bottom:8px; font-variant:small-caps; letter-spacing:.5px;}
+.shop-section .card-grid{gap:10px;}
 
 /* ---------- Toasts / floating text ---------- */
 #toasts{position:fixed; top:70px; left:50%; transform:translateX(-50%); z-index:950; display:flex; flex-direction:column; gap:8px; align-items:center; pointer-events:none;}

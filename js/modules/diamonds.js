@@ -1,24 +1,44 @@
 "use strict";
+
 /* ============================================================
-   RESERVED MODULE — diamonds.js
-   STATUS: Not implemented. Not loaded by index.html.
+   MODULE — diamonds.js
+   STATUS: Implemented — Premium Currency ("Gems").
 
-   FUTURE RESPONSIBILITY
-   A second, premium currency parallel to coins.
+   RESPONSIBILITY
+   The second, premium currency parallel to coins that this file
+   was reserved for (see PROJECT_RULES.md's reserved-module table).
+   Shipped as "Gems" — state.gems / addGems() / spendGems() /
+   hasEnoughGems() — rather than the doc's original "diamonds"
+   naming; PROJECT_RULES.md's reserved-module table has been
+   updated in this same change so the doc and code don't drift
+   apart (Section 11, rule 5).
 
-   INTEGRATION RULES (see PROJECT_RULES.md, Section 6, 7 & 11)
-   - Gets its own state.diamonds balance, added additively in
-     defaultState().
-   - Gets its own economy helpers mirroring js/economy.js
-     (addDiamonds(), spendDiamonds()) rather than overloading the
-     existing addCoins()/spendCoins() functions.
-   - Diamond ids/sources that end up stored in save data (e.g. a
-     future "diamondsEarnedFrom" log) are permanent contracts, same
-     as existing chain/building/upgrade ids — never renamed or
-     reused once shipped.
-   - Any balance granted by billing.js must eventually be treated
-     as needing server verification before being authoritative
-     (Section 10 — Security Rules).
-
-   This file intentionally contains no executable logic yet.
+   - Owns state.gems (added additively in state.js's defaultState(),
+     with gems:0 as the safe default for old saves — see Section 7).
+   - Owns its own economy helpers, mirroring economy.js's
+     addCoins()/spendCoins() pattern, instead of overloading those
+     functions (Section 6.6 / Section 11 reserved-module rule).
+   - Every mutation calls the existing updateTopbar() so #gemDisplay
+     in the HUD updates immediately, the same way coins already do.
+   - No shop or billing integration yet (both are still separate
+     reserved modules) — nothing calls these functions until a
+     future feature deliberately opts in.
+   - Per Section 10: today gems are a plain client-side balance, the
+     same trust level as coins. If a future billing.js ever grants
+     gems for real money, that balance must be server-verified
+     before being treated as authoritative — this file alone must
+     never assume a balance it holds is payment-verified.
    ============================================================ */
+
+function addGems(n){
+  n=Math.round(n);
+  state.gems+=n;
+  updateTopbar();
+}
+function hasEnoughGems(n){
+  return state.gems>=n;
+}
+function spendGems(n){
+  if(!hasEnoughGems(n)) return false;
+  state.gems-=n; updateTopbar(); return true;
+}

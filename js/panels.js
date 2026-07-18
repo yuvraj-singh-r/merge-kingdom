@@ -242,6 +242,7 @@ function renderStats(){
    ============================================================ */
 function updateTopbar(){
   document.getElementById("coinDisplay").textContent=fmt(state.coins);
+  document.getElementById("gemDisplay").textContent=fmt(state.gems);
   document.getElementById("scoreDisplay").textContent=fmt(state.score);
   document.getElementById("levelBadge").textContent=state.level;
   document.getElementById("xpFill").style.width=Math.min(100,(state.xp/xpNeeded(state.level))*100)+"%";
@@ -259,6 +260,7 @@ function renderForTab(tab){
   if(tab==="build") renderBuildings();
   if(tab==="upgrades") renderUpgrades();
   if(tab==="quests") renderQuests();
+  if(tab==="quests") renderDailyQuests();
   if(tab==="achievements") renderAchievements();
   if(tab==="collection") renderCollection();
   if(tab==="inventory") renderInventory();

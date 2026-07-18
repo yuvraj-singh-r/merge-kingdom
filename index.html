@@ -31,12 +31,14 @@
 <div id="app">
   <div class="topbar">
     <div class="stat-chip"><span class="ic">🪙</span><span id="coinDisplay">0</span></div>
+    <div class="stat-chip"><span class="ic">💎</span><span id="gemDisplay">0</span></div>
     <div class="stat-chip"><span class="ic">⭐</span><span id="scoreDisplay">0</span></div>
     <div class="levelwrap">
       <div class="levelbadge" id="levelBadge">1</div>
       <div class="xpbar"><i id="xpFill"></i></div>
     </div>
     <button class="iconbtn" id="btnDaily" title="Daily Reward">🎁<span class="dot hidden" id="dailyDot"></span></button>
+    <button class="iconbtn" id="btnShop" title="Shop">🛍️</button>
     <button class="iconbtn" id="btnSettingsTop" title="Settings">⚙️</button>
   </div>
 
@@ -96,6 +98,10 @@
 
     <!-- QUESTS TAB -->
     <section class="tabpanel hidden" id="tab-quests">
+      <div class="panel">
+        <h2>🗓️ Daily Quests <small id="dailyQuestReset"></small></h2>
+        <div id="dailyQuestList"></div>
+      </div>
       <div class="panel">
         <h2>📜 Kingdom Quests <small id="questProgress"></small></h2>
         <div id="questList"></div>
@@ -172,8 +178,12 @@
 <script src="js/board.js"></script>
 <script src="js/panels.js"></script>
 <script src="js/daily.js"></script>
+<script src="js/dailyquests.js"></script>
 <script src="js/settings.js"></script>
 <script src="js/main.js"></script>
+<script src="js/dailyreward.js"></script>
+<script src="js/modules/diamonds.js"></script>
+<script src="js/modules/shop.js"></script>
 
 <!-- Reserved module wiring — Authentication only (see PROJECT_RULES.md Section 11) -->
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>

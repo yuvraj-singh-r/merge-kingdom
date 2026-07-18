@@ -81,6 +81,22 @@ function questDefs(){
   ];
 }
 
+/* Daily Quests — a pool of templates; 3 are chosen at random each
+   day by js/dailyquests.js. This is a separate pool from
+   questDefs() above (those are permanent, one-time quests; these
+   reset every 24 hours) — kept distinct rather than overloading
+   the existing quest table. */
+function dailyQuestDefs(){
+  return [
+    {id:"dq_merge10",   name:"Busy Merger",     desc:"Merge 10 items today.",         icon:"🔀", target:10,   type:"merges",        reward:{coins:100, xp:20}},
+    {id:"dq_earn500",   name:"Coin Hustle",     desc:"Earn 500 Coins today.",         icon:"🪙", target:500,  type:"coinsEarned",   reward:{gems:5, xp:20}},
+    {id:"dq_upgrade2",  name:"Kingdom Growth",  desc:"Build 2 buildings today.",      icon:"🏗️", target:2,    type:"buildingsBuilt", reward:{coins:150, xp:30}},
+    {id:"dq_merge25",   name:"Merge Marathon",  desc:"Merge 25 items today.",         icon:"⚙️", target:25,   type:"merges",        reward:{gems:10, xp:40}},
+    {id:"dq_earn1000",  name:"Treasury Push",   desc:"Earn 1,000 Coins today.",       icon:"💰", target:1000, type:"coinsEarned",   reward:{coins:200, xp:50}},
+    {id:"dq_upgrade1",  name:"New Construction",desc:"Build 1 building today.",       icon:"🏠", target:1,    type:"buildingsBuilt", reward:{gems:5, xp:15}}
+  ];
+}
+
 /* Achievements — generated to reach 50 */
 function achievementDefs(){
   const list = [];
