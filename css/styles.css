@@ -269,15 +269,9 @@ button{font-family:inherit; cursor:pointer;}
 .qitem .claim:disabled{background:#4c5482; color:var(--text-dim);}
 .qitem.done{border-color:var(--emerald);}
 
-.ach-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(130px,1fr)); gap:10px;}
-.ach{
-  background:var(--panel-2); border:1px solid var(--panel-border); border-radius:12px; padding:10px; text-align:center;
-  opacity:.45;
-}
-.ach.unlocked{opacity:1; border-color:var(--gold-2); box-shadow:0 0 10px rgba(240,196,25,.25);}
-.ach .icon{font-size:24px;}
-.ach .name{font-size:11px; font-weight:700; margin-top:4px;}
-.ach .desc{font-size:10px; color:var(--text-dim); margin-top:2px;}
+.achv-category{margin-top:14px;}
+.achv-category:first-child{margin-top:0;}
+.achv-category h3{color:var(--gold); font-size:14px; margin-bottom:8px; font-variant:small-caps; letter-spacing:.5px;}
 
 .coll-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(76px,1fr)); gap:8px;}
 .coll{background:var(--panel-2); border:1px solid var(--panel-border); border-radius:10px; padding:8px; text-align:center; font-size:22px;}

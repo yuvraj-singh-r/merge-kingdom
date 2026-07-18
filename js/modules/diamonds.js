@@ -33,6 +33,7 @@
 function addGems(n){
   n=Math.round(n);
   state.gems+=n;
+  state.lifetimeGems=(state.lifetimeGems||0)+n;
   updateTopbar();
 }
 function hasEnoughGems(n){

@@ -97,35 +97,68 @@ function dailyQuestDefs(){
   ];
 }
 
-/* Achievements — generated to reach 50 */
+/* ============================================================
+   ACHIEVEMENTS 2.0
+   ------------------------------------------------------------
+   Each entry has a numeric target and a valueFn(state)->number
+   used to compute progress (mirrors questStateValue()'s pattern
+   of reading straight off state) plus a coins/gems/xp reward.
+   This replaces the old boolean cond:s=>bool list — see
+   panels.js's checkAchievements()/renderAchievements() for the
+   claim flow this shape enables. Grouped into the 8 required
+   categories: Merging, Coins, Gems, Buildings, Login Streak,
+   Daily Quests, Collection, Progression.
+   ============================================================ */
 function achievementDefs(){
-  const list = [];
-  list.push({id:"a_first_merge",name:"First Merge",desc:"Complete your first merge.",icon:"🔀",cond:s=>s.totalMerges>=1});
-  const mergeMilestones=[10,25,50,100,250,500,1000,2500];
-  mergeMilestones.forEach(n=>list.push({id:"a_merges_"+n,name:n+" Merges",desc:"Perform "+n+" merges.",icon:"⚙️",cond:s=>s.totalMerges>=n}));
-  const coinMilestones=[100,500,1000,5000,10000,50000,100000,500000,1000000];
-  coinMilestones.forEach(n=>list.push({id:"a_coins_"+n,name:fmt(n)+" Coins",desc:"Earn "+fmt(n)+" lifetime coins.",icon:"🪙",cond:s=>s.lifetimeCoins>=n}));
-  const levelMilestones=[2,5,10,15,20,25,30,40,50];
-  levelMilestones.forEach(n=>list.push({id:"a_level_"+n,name:"Level "+n,desc:"Reach kingdom level "+n+".",icon:"⭐",cond:s=>s.level>=n}));
-  Object.keys(CHAINS).forEach(ck=>{
-    const chain=CHAINS[ck];
-    const topTier=chain.tiers.length-1;
-    const midTier=Math.floor(topTier/2);
-    list.push({id:"a_chain_"+ck+"_mid",name:"Rising "+chain.label,desc:"Reach "+chain.tiers[midTier].name+" in the "+chain.label+" chain.",icon:chain.tiers[midTier].icon,cond:s=>(s.maxTier[ck]||0)>=midTier});
-    list.push({id:"a_chain_"+ck+"_top",name:chain.tiers[topTier].name+"!",desc:"Reach the final tier of the "+chain.label+" chain.",icon:chain.tiers[topTier].icon,cond:s=>(s.maxTier[ck]||0)>=topTier});
-  });
-  BUILDINGS.forEach(b=>list.push({id:"a_build_"+b.id,name:"First "+b.name,desc:"Construct a "+b.name+".",icon:b.icon,cond:s=>(s.buildings[b.id]||0)>=1}));
-  list.push({id:"a_master_builder",name:"Master Builder",desc:"Own 10 total buildings.",icon:"🏗️",cond:s=>Object.values(s.buildings).reduce((a,b)=>a+b,0)>=10});
-  SPECIALS.forEach(sp=>list.push({id:"a_special_"+sp.id,name:"Found: "+sp.name,desc:"Discover the "+sp.name+".",icon:sp.icon,cond:s=>s.specialsFound.includes(sp.id)}));
-  list.push({id:"a_merge_king",name:"Merge King",desc:"Perform 1000 total merges.",icon:"👑",cond:s=>s.totalMerges>=1000});
-  list.push({id:"a_legend",name:"Legend",desc:"Reach Level 25 and own 10 buildings.",icon:"🐉",cond:s=>s.level>=25 && Object.values(s.buildings).reduce((a,b)=>a+b,0)>=10});
-  list.push({id:"a_collector",name:"Collector",desc:"Discover 15 different items.",icon:"📖",cond:s=>s.collection.length>=15});
-  list.push({id:"a_full_collection",name:"Complete Collection",desc:"Discover every item in the realm.",icon:"📚",cond:s=>s.collection.length>=totalCollectibles()});
-  list.push({id:"a_quest_master",name:"Quest Master",desc:"Complete every quest.",icon:"📜",cond:s=>questDefs().every(q=>s.questsClaimed.includes(q.id))});
-  list.push({id:"a_daily_streak",name:"Loyal Ruler",desc:"Claim 3 daily rewards.",icon:"🎁",cond:s=>s.dailyStreak>=3});
-  list.push({id:"a_daily_streak7",name:"Devoted Monarch",desc:"Claim 7 daily rewards.",icon:"🗓️",cond:s=>s.dailyStreak>=7});
-  list.push({id:"a_rich",name:"Wealthy Ruler",desc:"Hold 5,000 coins at once.",icon:"💎",cond:s=>s.coins>=5000});
-  return list.slice(0,50);
+  return [
+    /* --- Merging --- */
+    {id:"a2_merge_1",    category:"Merging", name:"First Merge",     desc:"Merge your first item.",           icon:"🔀", target:1,    valueFn:s=>s.totalMerges, reward:{coins:20,   xp:5}},
+    {id:"a2_merge_50",   category:"Merging", name:"Merge Apprentice",desc:"Perform 50 total merges.",         icon:"⚙️", target:50,   valueFn:s=>s.totalMerges, reward:{coins:150,  xp:40}},
+    {id:"a2_merge_250",  category:"Merging", name:"Merge Master",    desc:"Perform 250 total merges.",        icon:"🎯", target:250,  valueFn:s=>s.totalMerges, reward:{coins:500,  gems:10, xp:100}},
+    {id:"a2_merge_1000", category:"Merging", name:"Merge Legend",    desc:"Perform 1,000 total merges.",      icon:"👑", target:1000, valueFn:s=>s.totalMerges, reward:{coins:1500, gems:30, xp:300}},
+
+    /* --- Coins --- */
+    {id:"a2_coins_500",    category:"Coins", name:"Coin Collector", desc:"Earn 500 lifetime coins.",         icon:"🪙", target:500,    valueFn:s=>s.lifetimeCoins, reward:{gems:5,   xp:20}},
+    {id:"a2_coins_5000",   category:"Coins", name:"Coin Hoarder",   desc:"Earn 5,000 lifetime coins.",       icon:"💰", target:5000,   valueFn:s=>s.lifetimeCoins, reward:{gems:15,  xp:60}},
+    {id:"a2_coins_50000",  category:"Coins", name:"Wealthy Ruler",  desc:"Earn 50,000 lifetime coins.",      icon:"🏦", target:50000,  valueFn:s=>s.lifetimeCoins, reward:{gems:40,  xp:150}},
+    {id:"a2_coins_250000", category:"Coins", name:"Coin Tycoon",    desc:"Earn 250,000 lifetime coins.",     icon:"🏛️", target:250000, valueFn:s=>s.lifetimeCoins, reward:{gems:100, xp:400}},
+
+    /* --- Gems --- */
+    {id:"a2_gems_10",   category:"Gems", name:"Gem Finder",   desc:"Earn 10 lifetime gems.",       icon:"💎", target:10,   valueFn:s=>s.lifetimeGems||0, reward:{coins:100,  xp:20}},
+    {id:"a2_gems_100",  category:"Gems", name:"Gem Collector",desc:"Earn 100 lifetime gems.",      icon:"💎", target:100,  valueFn:s=>s.lifetimeGems||0, reward:{coins:500,  xp:80}},
+    {id:"a2_gems_500",  category:"Gems", name:"Gem Hoarder",  desc:"Earn 500 lifetime gems.",      icon:"💎", target:500,  valueFn:s=>s.lifetimeGems||0, reward:{coins:1500, xp:200}},
+    {id:"a2_gems_1000", category:"Gems", name:"Gem Baron",    desc:"Earn 1,000 lifetime gems.",    icon:"💎", target:1000, valueFn:s=>s.lifetimeGems||0, reward:{coins:3000, xp:400}},
+
+    /* --- Buildings --- */
+    {id:"a2_build_1",  category:"Buildings", name:"First Builder",        desc:"Construct your first building.", icon:"🏠", target:1,  valueFn:s=>Object.values(s.buildings).reduce((a,b)=>a+b,0), reward:{coins:80,   xp:20}},
+    {id:"a2_build_10", category:"Buildings", name:"Growing Kingdom",      desc:"Own 10 total buildings.",         icon:"🏘️", target:10, valueFn:s=>Object.values(s.buildings).reduce((a,b)=>a+b,0), reward:{coins:300,  gems:10, xp:80}},
+    {id:"a2_build_25", category:"Buildings", name:"Master Builder",       desc:"Own 25 total buildings.",         icon:"🏗️", target:25, valueFn:s=>Object.values(s.buildings).reduce((a,b)=>a+b,0), reward:{coins:800,  gems:25, xp:180}},
+    {id:"a2_build_50", category:"Buildings", name:"Architect of the Realm",desc:"Own 50 total buildings.",        icon:"🏰", target:50, valueFn:s=>Object.values(s.buildings).reduce((a,b)=>a+b,0), reward:{coins:2000, gems:60, xp:350}},
+
+    /* --- Login Streak --- */
+    {id:"a2_streak_3",  category:"Login Streak", name:"Returning Ruler", desc:"Reach a 3-day login streak.",  icon:"🎁", target:3,  valueFn:s=>s.dailyStreak, reward:{coins:100,  xp:20}},
+    {id:"a2_streak_7",  category:"Login Streak", name:"Loyal Ruler",     desc:"Reach a 7-day login streak.",  icon:"🗓️", target:7,  valueFn:s=>s.dailyStreak, reward:{coins:300,  gems:10, xp:60}},
+    {id:"a2_streak_14", category:"Login Streak", name:"Devoted Monarch", desc:"Reach a 14-day login streak.", icon:"📅", target:14, valueFn:s=>s.dailyStreak, reward:{coins:700,  gems:25, xp:120}},
+    {id:"a2_streak_30", category:"Login Streak", name:"Eternal Sovereign",desc:"Reach a 30-day login streak.",icon:"👑", target:30, valueFn:s=>s.dailyStreak, reward:{coins:1500, gems:60, xp:300}},
+
+    /* --- Daily Quests --- */
+    {id:"a2_dq_5",   category:"Daily Quests", name:"Quest Novice",    desc:"Claim 5 daily quests.",   icon:"📜", target:5,   valueFn:s=>s.totalDailyQuestsClaimed||0, reward:{coins:150,  xp:30}},
+    {id:"a2_dq_25",  category:"Daily Quests", name:"Quest Regular",   desc:"Claim 25 daily quests.",  icon:"🗓️", target:25,  valueFn:s=>s.totalDailyQuestsClaimed||0, reward:{coins:500,  gems:15, xp:100}},
+    {id:"a2_dq_75",  category:"Daily Quests", name:"Quest Veteran",   desc:"Claim 75 daily quests.",  icon:"🏅", target:75,  valueFn:s=>s.totalDailyQuestsClaimed||0, reward:{coins:1200, gems:35, xp:220}},
+    {id:"a2_dq_150", category:"Daily Quests", name:"Quest Grandmaster",desc:"Claim 150 daily quests.",icon:"🏆", target:150, valueFn:s=>s.totalDailyQuestsClaimed||0, reward:{coins:2500, gems:75, xp:400}},
+
+    /* --- Collection --- */
+    {id:"a2_coll_5",   category:"Collection", name:"Curious Collector", desc:"Discover 5 different items.",  icon:"📖", target:5,  valueFn:s=>s.collection.length, reward:{coins:100,  xp:20}},
+    {id:"a2_coll_15",  category:"Collection", name:"Avid Collector",    desc:"Discover 15 different items.", icon:"📗", target:15, valueFn:s=>s.collection.length, reward:{coins:400,  gems:15, xp:80}},
+    {id:"a2_coll_30",  category:"Collection", name:"Master Collector",  desc:"Discover 30 different items.", icon:"📘", target:30, valueFn:s=>s.collection.length, reward:{coins:900,  gems:35, xp:180}},
+    {id:"a2_coll_full",category:"Collection", name:"Complete Collection",desc:"Discover every item in the realm.", icon:"📚", target:totalCollectibles(), valueFn:s=>s.collection.length, reward:{coins:2000, gems:100, xp:400}},
+
+    /* --- Progression --- */
+    {id:"a2_level_5",  category:"Progression", name:"Rising Ruler",   desc:"Reach kingdom level 5.",  icon:"⭐", target:5,  valueFn:s=>s.level, reward:{coins:150,  gems:5}},
+    {id:"a2_level_15", category:"Progression", name:"Established Kingdom",desc:"Reach kingdom level 15.",icon:"🌟", target:15, valueFn:s=>s.level, reward:{coins:600,  gems:20}},
+    {id:"a2_level_30", category:"Progression", name:"Grand Monarch",  desc:"Reach kingdom level 30.", icon:"🐉", target:30, valueFn:s=>s.level, reward:{coins:1500, gems:50}},
+    {id:"a2_level_50", category:"Progression", name:"Legendary Ruler",desc:"Reach kingdom level 50.", icon:"🏆", target:50, valueFn:s=>s.level, reward:{coins:4000, gems:120}}
+  ];
 }
 function totalCollectibles(){
   let n=0; Object.keys(CHAINS).forEach(k=>n+=CHAINS[k].tiers.length); n+=SPECIALS.length; return n;

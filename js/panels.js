@@ -124,36 +124,77 @@ function renderQuests(){
 }
 
 /* ============================================================
-   ACHIEVEMENTS TAB
+   ACHIEVEMENTS TAB (2.0 — progress, rewards, claiming)
    ============================================================ */
+const ACHIEVEMENT_CATEGORY_ORDER=["Merging","Coins","Gems","Buildings","Login Streak","Daily Quests","Collection","Progression"];
+
+function achievementValue(a){ return Math.min(a.target, a.valueFn(state)); }
+
 function checkAchievements(){
   const defs=achievementDefs();
   let newly=[];
   defs.forEach(a=>{
-    if(!state.achievementsUnlocked.includes(a.id) && a.cond(state)){
+    if(!state.achievementsUnlocked.includes(a.id) && achievementValue(a)>=a.target){
       state.achievementsUnlocked.push(a.id);
       newly.push(a);
     }
   });
   if(newly.length){
     save();
-    newly.forEach(a=>toast("🏆 Achievement: "+a.name+"!"));
+    newly.forEach(a=>toast("🏆 Achievement ready to claim: "+a.name+"!"));
     const tab=document.getElementById("tab-achievements");
     if(tab && !tab.classList.contains("hidden")) renderAchievements();
   }
+}
+function achievementCardHtml(a){
+  const unlocked=state.achievementsUnlocked.includes(a.id);
+  const claimed=state.achievementsClaimed.includes(a.id);
+  const val=achievementValue(a);
+  const complete=val>=a.target;
+  const rewardParts=[];
+  if(a.reward.coins) rewardParts.push(a.reward.coins+" 🪙");
+  if(a.reward.gems) rewardParts.push(a.reward.gems+" 💎");
+  if(a.reward.xp) rewardParts.push(a.reward.xp+" XP");
+  return (
+    '<div class="qitem'+(claimed?" done":"")+'" data-ach-id="'+a.id+'">'+
+      '<div class="icon">'+(unlocked?a.icon:"🔒")+'</div>'+
+      '<div class="body"><div class="t">'+a.name+'</div><div class="desc" style="font-size:11px;color:var(--text-dim);">'+a.desc+'</div>'+
+      '<div class="prog"><i style="width:'+(val/a.target*100)+'%;"></i></div>'+
+      '<div class="reward">Reward: '+rewardParts.join(" + ")+'</div></div>'+
+      '<button class="claim" '+((complete&&!claimed)?"":"disabled")+'>'+(claimed?"Claimed":"Claim")+'</button>'+
+    '</div>'
+  );
 }
 function renderAchievements(){
   const grid=document.getElementById("achGrid");
   grid.innerHTML="";
   const defs=achievementDefs();
-  defs.forEach(a=>{
-    const unlocked=state.achievementsUnlocked.includes(a.id);
-    const div=document.createElement("div");
-    div.className="ach"+(unlocked?" unlocked":"");
-    div.innerHTML='<div class="icon">'+(unlocked?a.icon:"🔒")+'</div><div class="name">'+a.name+'</div><div class="desc">'+a.desc+'</div>';
-    grid.appendChild(div);
+  ACHIEVEMENT_CATEGORY_ORDER.forEach(cat=>{
+    const inCat=defs.filter(a=>a.category===cat);
+    if(!inCat.length) return;
+    const section=document.createElement("div");
+    section.className="achv-category";
+    section.innerHTML='<h3>'+cat+'</h3>'+inCat.map(achievementCardHtml).join("");
+    grid.appendChild(section);
   });
-  document.getElementById("achProgress").textContent = state.achievementsUnlocked.length+" / "+defs.length;
+  grid.querySelectorAll(".qitem[data-ach-id]").forEach(div=>{
+    const a=defs.find(d=>d.id===div.dataset.achId);
+    if(!a) return;
+    const btn=div.querySelector(".claim");
+    btn.onclick=()=>{
+      const claimed=state.achievementsClaimed.includes(a.id);
+      const complete=achievementValue(a)>=a.target;
+      if(complete && !claimed){
+        state.achievementsClaimed.push(a.id);
+        addCoins(a.reward.coins||0);
+        addGems(a.reward.gems||0);
+        addXP(a.reward.xp||0);
+        sfx.victory(); toast("🏆 Achievement claimed: "+a.name+"!");
+        renderAchievements(); save();
+      }
+    };
+  });
+  document.getElementById("achProgress").textContent = state.achievementsClaimed.length+" / "+defs.length;
 }
 
 /* ============================================================
@@ -222,7 +263,7 @@ function renderStats(){
     ["📈 Level", state.level],
     ["🔀 Total Merges", fmt(state.totalMerges)],
     ["🏗️ Buildings Owned", totalBuildings],
-    ["🏆 Achievements", state.achievementsUnlocked.length+"/50"],
+    ["🏆 Achievements", state.achievementsClaimed.length+"/"+achievementDefs().length],
     ["📖 Collection", state.collection.length+"/"+totalCollectibles()],
     ["📜 Quests Done", state.questsClaimed.length+"/"+questDefs().length],
     ["🎁 Daily Streak", state.dailyStreak],

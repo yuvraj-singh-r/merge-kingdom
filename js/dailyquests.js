@@ -85,6 +85,7 @@ function renderDailyQuests(){
     div.querySelector(".claim").onclick=()=>{
       if(complete && !claimed){
         dq.claimed.push(qid);
+        state.totalDailyQuestsClaimed=(state.totalDailyQuestsClaimed||0)+1;
         addCoins(q.reward.coins||0);
         addGems(q.reward.gems||0);
         addXP(q.reward.xp||0);
