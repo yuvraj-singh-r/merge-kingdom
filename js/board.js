@@ -144,7 +144,7 @@ function findGroup(startIndex){
   return group;
 }
 function runAutoMergeLoop(preferIndex){
-  let mergedAny=false, safety=0;
+  let mergedAny=false, safety=0, comboCount=0;
   while(safety++<200){
     let didOne=false;
     const order = preferIndex!=null ? [preferIndex, ...state.board.map((_,i)=>i)] : state.board.map((_,i)=>i);
@@ -156,6 +156,7 @@ function runAutoMergeLoop(preferIndex){
       group.forEach(g=>already.add(g));
       if(group.length>=3){
         performMerge(group, idx);
+        comboCount++;
         mergedAny=true; didOne=true;
         preferIndex=null;
         break;
@@ -163,6 +164,7 @@ function runAutoMergeLoop(preferIndex){
     }
     if(!didOne) break;
   }
+  if(comboCount>(state.highestCombo||0)) state.highestCombo=comboCount;
   if(mergedAny){ renderBoard(); refreshActiveTab(); }
 }
 function performMerge(group, landIndex){

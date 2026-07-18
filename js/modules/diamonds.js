@@ -41,5 +41,5 @@ function hasEnoughGems(n){
 }
 function spendGems(n){
   if(!hasEnoughGems(n)) return false;
-  state.gems-=n; updateTopbar(); return true;
+  state.gems-=n; state.totalGemsSpent=(state.totalGemsSpent||0)+n; updateTopbar(); return true;
 }

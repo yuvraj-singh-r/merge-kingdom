@@ -26,6 +26,7 @@ function tick(){
   checkDailyAvailable();
   ensureDailyQuests();
   if(document.querySelector(".tabbtn[data-tab='build'].active")) renderBuildings();
+  if(document.querySelector(".tabbtn[data-tab='stats'].active")) renderStats();
 }
 function startLoops(){
   if(tickTimer) clearInterval(tickTimer);
@@ -56,6 +57,12 @@ function fullRender(){
   renderForTab(document.querySelector(".tabbtn.active").dataset.tab);
   checkDailyAvailable();
 }
+function trackDaysPlayed(){
+  if(!state.lastPlayedAt || isNewDay(state.lastPlayedAt, Date.now())){
+    state.daysPlayed=(state.daysPlayed||0)+1;
+  }
+  state.lastPlayedAt=Date.now();
+}
 function beginGame(){
   document.getElementById("startScreen").classList.add("hidden");
   const app=document.getElementById("app");
@@ -64,6 +71,7 @@ function beginGame(){
   applySwitch(document.getElementById("toggleMusic"), state.settings.music);
   applySwitch(document.getElementById("toggleSound"), state.settings.sound);
   applyOfflineEarnings();
+  trackDaysPlayed();
   fullRender();
   startLoops();
   checkAchievements();

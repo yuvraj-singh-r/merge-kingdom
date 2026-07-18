@@ -252,22 +252,38 @@ function renderInventory(){
 /* ============================================================
    STATS TAB
    ============================================================ */
+function fmtDuration(totalSeconds){
+  const h=Math.floor(totalSeconds/3600);
+  const m=Math.floor((totalSeconds%3600)/60);
+  if(h>=24){
+    const d=Math.floor(h/24), rh=h%24;
+    return d+"d "+rh+"h";
+  }
+  if(h>0) return h+"h "+m+"m";
+  return m+"m";
+}
 function renderStats(){
   const grid=document.getElementById("statsGrid");
-  const playH=(state.playSeconds/3600).toFixed(1);
-  const totalBuildings=Object.values(state.buildings).reduce((a,b)=>a+b,0);
+  const totalBuildingsBuilt=Object.values(state.buildings).reduce((a,b)=>a+b,0);
+  const totalBuildingsUpgraded=Object.values(state.upgrades).reduce((a,b)=>a+b,0);
   const items=[
-    ["🪙 Coins", fmt(state.coins)],
-    ["💰 Lifetime Coins", fmt(state.lifetimeCoins)],
-    ["⭐ Kingdom Score", fmt(state.score)],
-    ["📈 Level", state.level],
+    ["🕐 Total Play Time", fmtDuration(state.playSeconds)],
+    ["🪙 Total Coins Earned", fmt(state.lifetimeCoins)],
+    ["💎 Total Gems Earned", fmt(state.lifetimeGems||0)],
+    ["🪙 Total Coins Spent", fmt(state.totalCoinsSpent||0)],
+    ["💎 Total Gems Spent", fmt(state.totalGemsSpent||0)],
     ["🔀 Total Merges", fmt(state.totalMerges)],
-    ["🏗️ Buildings Owned", totalBuildings],
-    ["🏆 Achievements", state.achievementsClaimed.length+"/"+achievementDefs().length],
+    ["🏗️ Buildings Built", totalBuildingsBuilt],
+    ["⚗️ Buildings Upgraded", totalBuildingsUpgraded],
+    ["🔥 Highest Combo", state.highestCombo||0],
+    ["⭐ Highest Kingdom Level", state.level],
+    ["🗓️ Daily Quests Completed", state.totalDailyQuestsClaimed||0],
+    ["🏆 Achievements Completed", state.achievementsClaimed.length+"/"+achievementDefs().length],
+    ["🎁 Login Streak", state.dailyStreak],
+    ["📆 Days Played", state.daysPlayed||0],
+    ["💰 Kingdom Score", fmt(state.score)],
     ["📖 Collection", state.collection.length+"/"+totalCollectibles()],
-    ["📜 Quests Done", state.questsClaimed.length+"/"+questDefs().length],
-    ["🎁 Daily Streak", state.dailyStreak],
-    ["⏱️ Time Played", playH+" hrs"]
+    ["📜 Quests Done", state.questsClaimed.length+"/"+questDefs().length]
   ];
   grid.innerHTML="";
   items.forEach(([lbl,val])=>{

@@ -10,7 +10,7 @@ function addCoins(n){
 }
 function spendCoins(n){
   if(state.coins<n) return false;
-  state.coins-=n; updateTopbar(); return true;
+  state.coins-=n; state.totalCoinsSpent=(state.totalCoinsSpent||0)+n; updateTopbar(); return true;
 }
 function addXP(n){
   n=Math.round(n*(1+(state.upgrades.xp||0)*0.1));

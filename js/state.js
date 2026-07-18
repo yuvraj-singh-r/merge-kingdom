@@ -10,6 +10,7 @@ function defaultState(){
     queue:[],
     coins:100, lifetimeCoins:100, gems:0, lifetimeGems:0, xp:0, level:1, score:0,
     totalMerges:0, maxTier:{}, buildings:{}, upgrades:{},
+    totalCoinsSpent:0, totalGemsSpent:0, highestCombo:0, daysPlayed:0, lastPlayedAt:0,
     questsProgress:{}, questsClaimed:[], achievementsUnlocked:[], achievementsClaimed:[],
     collection:[], specialsFound:[],
     dailyStreak:0, lastDailyClaim:0, totalDailyQuestsClaimed:0,

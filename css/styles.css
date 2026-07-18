@@ -279,7 +279,12 @@ button{font-family:inherit; cursor:pointer;}
 .coll .cname{font-size:9px; color:var(--text-dim); margin-top:3px; display:block;}
 
 .statgrid{display:grid; grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); gap:10px;}
-.statbox{background:var(--panel-2); border:1px solid var(--panel-border); border-radius:12px; padding:12px; text-align:center;}
+.statbox{
+  background:var(--panel-2); border:1px solid var(--panel-border); border-radius:12px; padding:14px 12px;
+  text-align:center; position:relative; overflow:hidden; transition:transform .15s ease, box-shadow .15s ease;
+}
+.statbox::before{content:""; position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(90deg,var(--gold-soft),var(--gold-2));}
+.statbox:hover{transform:translateY(-2px); box-shadow:var(--shadow);}
 .statbox .val{font-size:20px; font-weight:800; color:var(--gold);}
 .statbox .lbl{font-size:11px; color:var(--text-dim); margin-top:2px;}
 
