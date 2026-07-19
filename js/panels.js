@@ -322,6 +322,7 @@ function renderForTab(tab){
   if(tab==="collection") renderCollection();
   if(tab==="inventory") renderInventory();
   if(tab==="stats") renderStats();
+  if(tab==="leaderboard") openLeaderboardPanel();
 }
 document.getElementById("tabs").addEventListener("click",(e)=>{
   const btn=e.target.closest(".tabbtn");

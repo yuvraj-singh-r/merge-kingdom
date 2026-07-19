@@ -51,6 +51,7 @@
     <button class="tabbtn" data-tab="collection">📖 Collection</button>
     <button class="tabbtn" data-tab="inventory">🎒 Inventory</button>
     <button class="tabbtn" data-tab="stats">📊 Stats</button>
+    <button class="tabbtn" data-tab="leaderboard">🏅 Leaderboard</button>
     <button class="tabbtn" data-tab="settings">⚙️ Settings</button>
   </div>
 
@@ -140,6 +141,16 @@
       </div>
     </section>
 
+    <!-- LEADERBOARD TAB -->
+    <section class="tabpanel hidden" id="tab-leaderboard">
+      <div class="panel">
+        <h2>🏅 Leaderboard <small>Top 100</small></h2>
+        <div class="lb-categories" id="lbCategories"></div>
+        <div id="lbStatus"></div>
+        <div id="lbList"></div>
+      </div>
+    </section>
+
     <!-- SETTINGS TAB -->
     <section class="tabpanel hidden" id="tab-settings">
       <div class="panel">
@@ -193,6 +204,7 @@
 <script src="js/modules/firebase.js"></script>
 <script src="js/modules/auth.js"></script>
 <script src="js/modules/cloudsave.js"></script>
+<script src="js/modules/leaderboard.js"></script>
 
 </body>
 </html>
