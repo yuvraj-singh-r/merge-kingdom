@@ -28,6 +28,51 @@ const CHAINS = {
 };
 const BASE_CHAINS = ["grass","stone","wood","flower","coins","berry"];
 
+/* --- World Map: per-island unique merge chains (additive — the
+   original 6 chains above are untouched and remain Grassland's
+   pool) --- */
+Object.assign(CHAINS, {
+  f_mushroom:{label:"Mushroom", tiers:[
+    {name:"Mushroom",icon:"🍄"},{name:"Toadstool Ring",icon:"🟤"},{name:"Fungal Grove",icon:"🌲"}
+  ]},
+  f_owl:{label:"Owl", tiers:[
+    {name:"Owlet",icon:"🦉"},{name:"Forest Owl",icon:"🦇"},{name:"Ancient Owl Roost",icon:"🌳"}
+  ]},
+  d_cactus:{label:"Cactus", tiers:[
+    {name:"Cactus",icon:"🌵"},{name:"Oasis Palm",icon:"🌴"},{name:"Desert Bloom",icon:"🏜️"}
+  ]},
+  d_dune:{label:"Dune", tiers:[
+    {name:"Sand Dune",icon:"🏖️"},{name:"Scarab",icon:"🪲"},{name:"Pyramid",icon:"🔺"}
+  ]},
+  s_snow:{label:"Snow", tiers:[
+    {name:"Snowball",icon:"⚪"},{name:"Snowman",icon:"⛄"},{name:"Igloo",icon:"🏔️"}
+  ]},
+  s_penguin:{label:"Penguin", tiers:[
+    {name:"Penguin Chick",icon:"🐧"},{name:"Icicle Spire",icon:"🧊"},{name:"Frozen Palace",icon:"❄️"}
+  ]},
+  v_ember:{label:"Ember", tiers:[
+    {name:"Ember",icon:"🔥"},{name:"Lava Rock",icon:"🪨"},{name:"Obsidian Spire",icon:"🌋"}
+  ]},
+  v_phoenix:{label:"Phoenix", tiers:[
+    {name:"Firebird Egg",icon:"🥚"},{name:"Young Phoenix",icon:"🐦"},{name:"Phoenix Ascendant",icon:"🔥"}
+  ]},
+  m_crystal:{label:"Crystal", tiers:[
+    {name:"Crystal Shard",icon:"🔮"},{name:"Rune Stone",icon:"🪄"},{name:"Wizard Tower",icon:"🧙"}
+  ]},
+  m_dragon:{label:"Dragon", tiers:[
+    {name:"Dragon Scale",icon:"🐉"},{name:"Sky Serpent",icon:"🐲"},{name:"Astral Dragon",icon:"✨"}
+  ]}
+});
+
+const ISLAND_DEFS=[
+  {id:"grassland",  name:"Grassland",    icon:"🌾", themeClass:"isl-grassland", chains:BASE_CHAINS,                target:0,  valueFn:s=>1,                     unlockLabel:"Unlocked from the start"},
+  {id:"forest",     name:"Forest",       icon:"🌲", themeClass:"isl-forest",    chains:["f_mushroom","f_owl"],     target:5,  valueFn:s=>s.level,               unlockLabel:"Reach Kingdom Level 5"},
+  {id:"desert",     name:"Desert",       icon:"🏜️", themeClass:"isl-desert",    chains:["d_cactus","d_dune"],      target:300, valueFn:s=>s.totalMerges,        unlockLabel:"Perform 300 total merges"},
+  {id:"snow",       name:"Snow",         icon:"❄️", themeClass:"isl-snow",      chains:["s_snow","s_penguin"],     target:15, valueFn:s=>Object.values(s.buildings).reduce((a,b)=>a+b,0), unlockLabel:"Own 15 total buildings"},
+  {id:"volcano",    name:"Volcano",      icon:"🌋", themeClass:"isl-volcano",   chains:["v_ember","v_phoenix"],    target:20, valueFn:s=>s.level,               unlockLabel:"Reach Kingdom Level 20"},
+  {id:"magic",      name:"Magic Island", icon:"🔮", themeClass:"isl-magic",     chains:["m_crystal","m_dragon"],   target:15, valueFn:s=>s.achievementsClaimed.length, unlockLabel:"Complete 15 achievements"}
+];
+
 const SPECIALS = [
   {id:"goldenTree",name:"Golden Tree",icon:"🌟",coins:250,xp:80},
   {id:"magicCrystal",name:"Magic Crystal",icon:"💎",coins:300,xp:100},
@@ -161,5 +206,5 @@ function achievementDefs(){
   ];
 }
 function totalCollectibles(){
-  let n=0; Object.keys(CHAINS).forEach(k=>n+=CHAINS[k].tiers.length); n+=SPECIALS.length; return n;
+  let n=0; BASE_CHAINS.forEach(k=>n+=CHAINS[k].tiers.length); n+=SPECIALS.length; return n;
 }

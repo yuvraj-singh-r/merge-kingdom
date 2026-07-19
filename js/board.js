@@ -4,7 +4,9 @@
    BOARD / MERGE LOGIC
    ============================================================ */
 function randomBaseChain(){
-  return BASE_CHAINS[Math.floor(Math.random()*BASE_CHAINS.length)];
+  const island=ISLAND_DEFS.find(i=>i.id===(state.activeIsland||"grassland")) || ISLAND_DEFS[0];
+  const pool=island.chains;
+  return pool[Math.floor(Math.random()*pool.length)];
 }
 function makeSpawnItem(){
   if(Math.random()<rareChance()){

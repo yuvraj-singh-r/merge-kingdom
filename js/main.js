@@ -25,6 +25,7 @@ function tick(){
   state.playSeconds++;
   checkDailyAvailable();
   ensureDailyQuests();
+  checkIslandUnlocks();
   if(document.querySelector(".tabbtn[data-tab='build'].active")) renderBuildings();
   if(document.querySelector(".tabbtn[data-tab='stats'].active")) renderStats();
 }
@@ -73,6 +74,7 @@ function beginGame(){
   applyOfflineEarnings();
   trackDaysPlayed();
   fullRender();
+  applyIslandTheme();
   startLoops();
   checkAchievements();
   document.addEventListener("click", ()=>{ if(state.settings.music) startMusic(); }, {once:true});

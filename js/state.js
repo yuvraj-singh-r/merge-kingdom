@@ -17,6 +17,7 @@ function defaultState(){
     dailyReward:{ currentDay:1, lastClaimDate:null, streak:0, canClaim:false },
     shop:{ purchaseHistory:[] },
     dailyQuests:{ generatedAt:0, questIds:[], claimed:[], baseline:{merges:0,coinsEarned:0,buildingsBuilt:0} },
+    unlockedIslands:["grassland"], activeIsland:"grassland",
     settings:{music:true,sound:true,theme:"dark"},
     lastSeen:Date.now(), spawnReady:true, spawnNext:0,
     createdAt:Date.now(), playSeconds:0

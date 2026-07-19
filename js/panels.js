@@ -203,7 +203,7 @@ function renderAchievements(){
 function renderCollection(){
   const grid=document.getElementById("collGrid");
   grid.innerHTML="";
-  Object.keys(CHAINS).forEach(ck=>{
+  BASE_CHAINS.forEach(ck=>{
     CHAINS[ck].tiers.forEach((t,ti)=>{
       const key=ck+":"+ti;
       const found=state.collection.includes(key);
