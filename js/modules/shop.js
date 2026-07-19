@@ -44,14 +44,14 @@
 
 const SHOP_CATALOG = {
   coins: [
-    { id:"coins_small",  icon:"🪙", title:"Pouch of Coins",  desc:"A handful of coins for your treasury.",        priceType:"real", price:"$0.99", sku:"com.mergekingdom.coins_small"  },
-    { id:"coins_medium", icon:"💰", title:"Chest of Coins",  desc:"A solid boost to your kingdom's coffers.",      priceType:"real", price:"$4.99", sku:"com.mergekingdom.coins_medium" },
-    { id:"coins_large",  icon:"🏦", title:"Vault of Coins",  desc:"Enough coins to fast-track your next building.", priceType:"real", price:"$9.99", sku:"com.mergekingdom.coins_large"  }
+    { id:"coins_small",  icon:"🪙", title:"Pouch of Coins",  desc:"A handful of coins for your treasury.",        priceType:"real", price:"$0.99", sku:"com.mergerealms.coins_small"  },
+    { id:"coins_medium", icon:"💰", title:"Chest of Coins",  desc:"A solid boost to your kingdom's coffers.",      priceType:"real", price:"$4.99", sku:"com.mergerealms.coins_medium" },
+    { id:"coins_large",  icon:"🏦", title:"Vault of Coins",  desc:"Enough coins to fast-track your next building.", priceType:"real", price:"$9.99", sku:"com.mergerealms.coins_large"  }
   ],
   gems: [
-    { id:"gems_small",  icon:"💎", title:"Pouch of Gems", desc:"A small handful of premium gems.", priceType:"real", price:"$0.99", sku:"com.mergekingdom.gems_small"  },
-    { id:"gems_medium", icon:"💎", title:"Bag of Gems",   desc:"A generous bag of premium gems.",   priceType:"real", price:"$4.99", sku:"com.mergekingdom.gems_medium" },
-    { id:"gems_large",  icon:"💎", title:"Chest of Gems", desc:"A hefty chest of premium gems.",    priceType:"real", price:"$9.99", sku:"com.mergekingdom.gems_large"  }
+    { id:"gems_small",  icon:"💎", title:"Pouch of Gems", desc:"A small handful of premium gems.", priceType:"real", price:"$0.99", sku:"com.mergerealms.gems_small"  },
+    { id:"gems_medium", icon:"💎", title:"Bag of Gems",   desc:"A generous bag of premium gems.",   priceType:"real", price:"$4.99", sku:"com.mergerealms.gems_medium" },
+    { id:"gems_large",  icon:"💎", title:"Chest of Gems", desc:"A hefty chest of premium gems.",    priceType:"real", price:"$9.99", sku:"com.mergerealms.gems_large"  }
   ],
   special: [
     { id:"special_coins2x_24h",   icon:"⚡", title:"2× Coins (24h)",         desc:"Double coin production from your buildings for a full day.", priceType:"gems", price:150, sku:null },

@@ -1,4 +1,4 @@
-# Merge Kingdom — Project Rules
+# Merge Realms — Project Rules
 
 **Status:** Production
 **Scope:** This document governs all current and future work on this
@@ -32,7 +32,7 @@ touch it.
 
 ## 1. Project Architecture
 
-Merge Kingdom is a **static, dependency-free, multi-file browser
+Merge Realms is a **static, dependency-free, multi-file browser
 game**. There is no build step, no bundler, no package manager, and
 no server-side code. It runs by opening `index.html` or serving the
 folder statically.
@@ -191,7 +191,7 @@ version of an existing one (see Section 6 and Section 11).
 
 ## 6. Feature Integration Rules
 
-Adding a feature to Merge Kingdom must never require touching the
+Adding a feature to Merge Realms must never require touching the
 internals of an unrelated existing system. Follow this checklist:
 
 1. **Identify the owning file** using Section 3. If none fits,

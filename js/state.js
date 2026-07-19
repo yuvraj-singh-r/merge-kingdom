@@ -3,6 +3,11 @@
 /* ============================================================
    STATE
    ============================================================ */
+// NOTE: kept as "mergeKingdomSave_v1" on purpose — this is the
+// game's rebrand from Merge Kingdom to Merge Realms. Renaming this
+// key would make every existing player's localStorage save
+// invisible to the game (a fresh, empty save would load instead).
+// Only the *display* name changed; storage keys are not display text.
 const SAVE_KEY="mergeKingdomSave_v1";
 function defaultState(){
   return {

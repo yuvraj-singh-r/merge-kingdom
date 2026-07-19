@@ -1,6 +1,6 @@
-# Merge Kingdom — Multi-File Project
+# Merge Realms — Multi-File Project
 
-A structured, professional rebuild of the Merge Kingdom browser game.
+A structured, professional rebuild of the Merge Realms browser game.
 Gameplay, UI, and every feature are byte-for-byte identical to the
 original single-file version — only the file organization changed.
 

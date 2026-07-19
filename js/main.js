@@ -4,7 +4,7 @@
    BANNER — kingdom name grows with level
    ============================================================ */
 function updateBanner(){
-  const names=["Merge Kingdom","Growing Realm","Prosperous Realm","Royal Merge Kingdom","Legendary Merge Kingdom"];
+  const names=["Merge Realms","Growing Realm","Prosperous Realm","Royal Merge Realms","Legendary Merge Realms"];
   const idx=Math.min(names.length-1, Math.floor(state.level/8));
   document.getElementById("kingdomNameBanner").textContent=names[idx];
 }

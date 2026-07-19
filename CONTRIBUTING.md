@@ -1,6 +1,6 @@
-# Contributing to Merge Kingdom
+# Contributing to Merge Realms
 
-Thank you for your interest in contributing to Merge Kingdom!
+Thank you for your interest in contributing to Merge Realms!
 
 ## How to Contribute
 
@@ -22,4 +22,4 @@ If you find a bug, please open an Issue with:
 
 Suggestions for new gameplay features and improvements are welcome through GitHub Issues.
 
-Thank you for helping improve Merge Kingdom!
+Thank you for helping improve Merge Realms!

@@ -1,0 +1,16 @@
+<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Merge Realms">
+  <defs>
+    <linearGradient id="fGold" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#fbe28a"/>
+      <stop offset="100%" stop-color="#c9971e"/>
+    </linearGradient>
+    <linearGradient id="fCrystal" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#8fd3ff"/>
+      <stop offset="100%" stop-color="#1565c0"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="14" fill="#131327"/>
+  <polygon points="32,30 46,42 38,58 26,58 18,42" fill="url(#fCrystal)" stroke="#0c2c57" stroke-width="2"/>
+  <polygon points="14,32 17,16 26,24 32,12 38,24 47,16 50,32" fill="url(#fGold)" stroke="#8a611a" stroke-width="2" stroke-linejoin="round"/>
+  <rect x="14" y="29" width="36" height="7" rx="3" fill="url(#fGold)" stroke="#8a611a" stroke-width="2"/>
+</svg>

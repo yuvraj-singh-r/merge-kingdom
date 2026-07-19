@@ -1,0 +1,52 @@
+<svg viewBox="0 0 240 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Merge Realms crest">
+  <defs>
+    <linearGradient id="goldFace" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#fbe28a"/>
+      <stop offset="45%" stop-color="#f0c419"/>
+      <stop offset="100%" stop-color="#c9971e"/>
+    </linearGradient>
+    <linearGradient id="goldRim" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#fff6d6"/>
+      <stop offset="100%" stop-color="#a9781a"/>
+    </linearGradient>
+    <linearGradient id="crystalFace" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#bfe9ff"/>
+      <stop offset="35%" stop-color="#5fb8f5"/>
+      <stop offset="100%" stop-color="#12437f"/>
+    </linearGradient>
+    <linearGradient id="crystalShade" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#2f7fc9"/>
+      <stop offset="100%" stop-color="#0c2c57"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="38%" r="60%">
+      <stop offset="0%" stop-color="#f0c419" stop-opacity=".35"/>
+      <stop offset="100%" stop-color="#f0c419" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <circle cx="120" cy="120" r="118" fill="url(#glow)"/>
+
+  <!-- crystal -->
+  <g>
+    <polygon points="120,110 168,150 145,240 95,240 72,150" fill="url(#crystalFace)" stroke="#0c2c57" stroke-width="2"/>
+    <polygon points="120,110 168,150 120,168" fill="#dff3ff" opacity=".55"/>
+    <polygon points="120,168 168,150 145,240" fill="url(#crystalShade)"/>
+    <polygon points="120,168 72,150 95,240" fill="#1c4d86"/>
+    <polygon points="95,240 145,240 120,168" fill="#0c2c57"/>
+    <line x1="120" y1="110" x2="120" y2="168" stroke="#0c2c57" stroke-width="1.5" opacity=".6"/>
+    <line x1="120" y1="168" x2="120" y2="240" stroke="#0c2c57" stroke-width="1.5" opacity=".6"/>
+  </g>
+
+  <!-- crown -->
+  <g>
+    <polygon points="55,112 60,58 85,84 120,40 155,84 180,58 185,112"
+             fill="url(#goldFace)" stroke="#8a611a" stroke-width="2.5" stroke-linejoin="round"/>
+    <rect x="55" y="108" width="130" height="22" rx="5" fill="url(#goldRim)" stroke="#8a611a" stroke-width="2.5"/>
+    <circle cx="60" cy="58" r="9" fill="#f0c419" stroke="#8a611a" stroke-width="2"/>
+    <circle cx="120" cy="40" r="10" fill="#c0392b" stroke="#7a2318" stroke-width="2"/>
+    <circle cx="180" cy="58" r="9" fill="#f0c419" stroke="#8a611a" stroke-width="2"/>
+    <circle cx="87" cy="119" r="6" fill="#2d9d6f" stroke="#184f38" stroke-width="1.5"/>
+    <circle cx="120" cy="119" r="6" fill="#c0392b" stroke="#7a2318" stroke-width="1.5"/>
+    <circle cx="153" cy="119" r="6" fill="#2d9d6f" stroke="#184f38" stroke-width="1.5"/>
+  </g>
+</svg>

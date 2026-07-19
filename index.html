@@ -3,27 +3,33 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Merge Kingdom</title>
+<title>Merge Realms</title>
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
 
 <!-- ===================== LOADING SCREEN ===================== -->
 <div id="loading">
-  <div class="crest">🏰</div>
-  <h1>Merge Kingdom</h1>
+  <img class="crest" src="assets/logo.svg" alt="Merge Realms crest">
+  <h1>Merge Realms</h1>
   <p>Unfurling the royal banners…</p>
   <div class="loadbar"><i id="loadbarFill"></i></div>
+  <div class="version-tag">v1.0.0</div>
 </div>
 
 <!-- ===================== START SCREEN ===================== -->
 <div id="startScreen" class="hidden">
-  <div class="crest">👑</div>
-  <h1>Merge Kingdom</h1>
+  <img class="crest" src="assets/logo.svg" alt="Merge Realms crest">
+  <h1>Merge Realms</h1>
+  <div class="motto">Merge • Build • Rule</div>
   <p class="tagline">Merge humble grass and stone into a legendary realm. Build, upgrade, and grow a kingdom fit for dragons.</p>
   <div style="display:flex; gap:12px; flex-wrap:wrap; justify-content:center;">
-    <button class="royal-btn" id="btnContinue">Continue Kingdom</button>
-    <button class="royal-btn ghost" id="btnNewGame">New Kingdom</button>
+    <button class="royal-btn" id="btnContinue">Continue Realm</button>
+    <button class="royal-btn ghost" id="btnNewGame">New Realm</button>
   </div>
 </div>
 
@@ -60,7 +66,7 @@
 
     <!-- KINGDOM / BOARD TAB -->
     <section class="tabpanel" id="tab-kingdom">
-      <div class="banner-wrap"><div class="banner" id="kingdomNameBanner">Merge Kingdom</div></div>
+      <div class="banner-wrap"><div class="banner" id="kingdomNameBanner">Merge Realms</div></div>
 
       <div class="spawn-row">
         <div style="text-align:center;">
@@ -176,7 +182,7 @@
     </section>
 
   </div>
-  <footer class="credits">Merge Kingdom · A realm built one tile at a time</footer>
+  <footer class="credits">Merge Realms · A realm built one tile at a time</footer>
 </div>
 
 <div id="toasts"></div>
