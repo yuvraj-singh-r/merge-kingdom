@@ -91,6 +91,12 @@ button{font-family:inherit; cursor:pointer;}
 @keyframes float{0%,100%{transform:translateY(0) rotate(-2deg);}50%{transform:translateY(-10px) rotate(2deg);}}
 #loading h1{font-size:clamp(28px,6vw,44px); color:var(--gold); text-shadow:0 2px 12px rgba(240,196,25,.4);}
 #loading p{color:var(--text-dim); margin-top:6px; font-style:italic;}
+#loading .loading-tip{
+  margin-top:26px; max-width:min(340px,80vw); min-height:32px;
+  font-size:12px; color:var(--crystal-soft); opacity:.85; line-height:1.5;
+  transition:opacity .22s ease; padding:0 12px;
+}
+#loading .loading-tip.tip-fade{opacity:0;}
 .loadbar{width:min(320px,70vw); height:10px; border-radius:8px; background:rgba(255,255,255,.08); margin-top:22px; overflow:hidden; border:1px solid var(--panel-border);}
 .loadbar>i{display:block; height:100%; width:0%; background:linear-gradient(90deg,var(--gold-2),var(--gold),var(--gold-soft)); transition:width .25s ease; position:relative; overflow:hidden;}
 .loadbar>i::after{content:""; position:absolute; inset:0; background:linear-gradient(90deg,transparent,rgba(255,255,255,.55),transparent); animation:shimmer 1.6s linear infinite;}
@@ -107,7 +113,11 @@ button{font-family:inherit; cursor:pointer;}
     radial-gradient(900px 600px at 50% 95%, rgba(95,184,245,.12), transparent 65%),
     radial-gradient(900px 500px at 50% 20%,#262c5e,var(--bg-0));
   text-align:center; padding:20px;
+  opacity:0; transition:opacity .42s ease;
 }
+#startScreen.fade-in{opacity:1; animation:splashIn .6s ease both;}
+#startScreen.fade-out{opacity:0;}
+@keyframes splashIn{0%{opacity:0; transform:translateY(10px) scale(.98);}100%{opacity:1; transform:translateY(0) scale(1);}}
 #startScreen .crest{width:min(150px,34vw); animation:float 3s ease-in-out infinite; filter:drop-shadow(0 8px 24px rgba(240,196,25,.45));}
 #startScreen h1{font-size:clamp(32px,7vw,52px); color:var(--gold); text-shadow:0 2px 16px rgba(240,196,25,.4);}
 #startScreen .motto{
@@ -134,7 +144,8 @@ button{font-family:inherit; cursor:pointer;}
 
 /* ---------- App shell ---------- */
 #app{display:none; min-height:100vh; flex-direction:column; padding-bottom:14px;}
-#app.show{display:flex;}
+#app.show{display:flex; animation:appFadeIn .5s ease both;}
+@keyframes appFadeIn{0%{opacity:0;}100%{opacity:1;}}
 
 .topbar{
   position:sticky; top:0; z-index:60;

@@ -65,7 +65,12 @@ function trackDaysPlayed(){
   state.lastPlayedAt=Date.now();
 }
 function beginGame(){
-  document.getElementById("startScreen").classList.add("hidden");
+  const startScreen=document.getElementById("startScreen");
+  startScreen.classList.add("fade-out");
+  setTimeout(()=>{
+    startScreen.classList.add("hidden");
+    startScreen.classList.remove("fade-in","fade-out");
+  },420);
   const app=document.getElementById("app");
   app.classList.add("show");
   document.documentElement.setAttribute("data-theme", state.settings.theme==="light"?"light":"");
@@ -93,22 +98,98 @@ document.getElementById("btnNewGame").addEventListener("click", ()=>{
 
 window.addEventListener("beforeunload", ()=>{ if(state) save(); });
 
-// boot sequence
-let pct=0;
-const loadInterval=setInterval(()=>{
-  pct+=8+Math.random()*14;
-  document.getElementById("loadbarFill").style.width=Math.min(100,pct)+"%";
-  if(pct>=100){
-    clearInterval(loadInterval);
+// ============================================================
+// BOOT SEQUENCE
+// Gates the loading screen on three real signals — asset load,
+// Firebase init, save-data check — rather than a fake timer.
+// A max Firebase-wait timeout means players with no network or a
+// blocked connection still reach the start screen (local play
+// must never be held hostage by an optional cloud feature).
+// ============================================================
+const LOADING_TIPS=[
+  "Tip: Merge 3 matching items to create something greater.",
+  "Tip: Visit the World Map to discover new islands and merge chains.",
+  "Tip: Claim your Daily Reward every day to build a login streak.",
+  "Tip: Complete Daily Quests for bonus Coins, Gems, and XP.",
+  "Tip: Spend Gems in the Shop on special packs and boosts.",
+  "Tip: Check the Leaderboard to see how your realm ranks.",
+  "Tip: Claim Achievements for bonus Coins, Gems, and XP.",
+  "Tip: Upgrade your buildings to boost their income."
+];
+let loadingTipTimer=null;
+function startLoadingTips(){
+  const el=document.getElementById("loadingTip");
+  if(!el) return;
+  let i=0;
+  el.textContent=LOADING_TIPS[0];
+  loadingTipTimer=setInterval(()=>{
+    i=(i+1)%LOADING_TIPS.length;
+    el.classList.add("tip-fade");
     setTimeout(()=>{
-      document.getElementById("loading").classList.add("fade");
-      setTimeout(()=>{
-        document.getElementById("loading").style.display="none";
-        const startScreen=document.getElementById("startScreen");
-        startScreen.classList.remove("hidden");
-        document.getElementById("btnContinue").disabled=!hasSave();
-        if(!hasSave()) document.getElementById("btnContinue").style.display="none";
-      },650);
-    },300);
+      el.textContent=LOADING_TIPS[i];
+      el.classList.remove("tip-fade");
+    },220);
+  },2400);
+}
+function stopLoadingTips(){ if(loadingTipTimer){ clearInterval(loadingTipTimer); loadingTipTimer=null; } }
+
+function finishBoot(){
+  stopLoadingTips();
+  document.getElementById("loading").classList.add("fade");
+  setTimeout(()=>{
+    document.getElementById("loading").style.display="none";
+    const startScreen=document.getElementById("startScreen");
+    startScreen.classList.remove("hidden");
+    startScreen.classList.add("fade-in");
+    document.getElementById("btnContinue").disabled=!hasSave();
+    if(!hasSave()) document.getElementById("btnContinue").style.display="none";
+  },650);
+}
+
+function bootSequence(){
+  const FIREBASE_WAIT_TIMEOUT_MS=4000;
+  const MIN_DISPLAY_MS=900;
+  const bootStart=Date.now();
+
+  // Stage 1: assets — real <img class="crest"> load signal
+  let assetsReady=false;
+  const crestImgs=document.querySelectorAll("img.crest");
+  let pending=crestImgs.length;
+  const markAssetDone=()=>{ pending--; if(pending<=0) assetsReady=true; };
+  if(pending===0){ assetsReady=true; }
+  crestImgs.forEach(img=>{
+    if(img.complete){ markAssetDone(); return; }
+    img.addEventListener("load", markAssetDone, {once:true});
+    img.addEventListener("error", markAssetDone, {once:true});
+  });
+
+  // Stage 2: save data — localStorage reads are synchronous, always instantly ready
+  const saveDataReady=true;
+
+  // Stage 3: firebase — real window.firebaseApp signal, or timeout fallback
+  const firebaseWaitStart=Date.now();
+  function firebaseStageReady(){
+    return !!window.firebaseApp || (Date.now()-firebaseWaitStart>FIREBASE_WAIT_TIMEOUT_MS);
   }
-},180);
+
+  startLoadingTips();
+
+  let displayPct=0;
+  function frame(){
+    const stagesDone=(assetsReady?1:0)+(saveDataReady?1:0)+(firebaseStageReady()?1:0);
+    const targetPct=Math.min(100,(stagesDone/3)*100);
+    displayPct += (targetPct-displayPct)*0.15;
+    if(targetPct>=100 && displayPct>98.5) displayPct=100;
+    document.getElementById("loadbarFill").style.width=Math.min(100,displayPct)+"%";
+
+    const allReady=assetsReady && saveDataReady && firebaseStageReady();
+    const minTimeElapsed=(Date.now()-bootStart)>=MIN_DISPLAY_MS;
+    if(allReady && minTimeElapsed && displayPct>=99.3){
+      finishBoot();
+      return;
+    }
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+}
+bootSequence();
