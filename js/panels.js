@@ -109,11 +109,15 @@ function renderQuests(){
       '<div class="prog"><i style="width:'+(val/q.target*100)+'%"></i></div>'+
       '<div class="reward">Reward: '+(q.reward.coins?q.reward.coins+" 🪙 ":"")+(q.reward.xp?q.reward.xp+" XP":"")+'</div></div>'+
       '<button class="claim" '+((complete&&!claimed)?"":"disabled")+'>'+(claimed?"Claimed":"Claim")+'</button>';
-    div.querySelector(".claim").onclick=()=>{
+    const claimBtn=div.querySelector(".claim");
+    claimBtn.onclick=()=>{
       if(complete && !claimed){
         state.questsClaimed.push(q.id);
         addCoins(q.reward.coins||0); addXP(q.reward.xp||0);
         sfx.victory(); toast("📜 Quest complete: "+q.name+"!");
+        const bb=claimBtn.getBoundingClientRect();
+        burstParticles(bb.left+bb.width/2, bb.top+bb.height/2, "#2d9d6f", 10);
+        floatText(bb.left+bb.width/2-16, bb.top, "+"+(q.reward.coins||0)+"🪙 +"+(q.reward.xp||0)+"xp", "#2d9d6f");
         checkAchievements();
         renderQuests(); save();
       }
@@ -190,6 +194,15 @@ function renderAchievements(){
         addGems(a.reward.gems||0);
         addXP(a.reward.xp||0);
         sfx.victory(); toast("🏆 Achievement claimed: "+a.name+"!");
+        const bb=btn.getBoundingClientRect();
+        confettiBurst();
+        burstParticles(bb.left+bb.width/2, bb.top+bb.height/2, "#f0c419", 14);
+        if(a.reward.gems) burstParticles(bb.left+bb.width/2, bb.top+bb.height/2, "#5fb8f5", 10);
+        const rewardParts=[];
+        if(a.reward.coins) rewardParts.push("+"+a.reward.coins+"🪙");
+        if(a.reward.gems) rewardParts.push("+"+a.reward.gems+"💎");
+        if(a.reward.xp) rewardParts.push("+"+a.reward.xp+"xp");
+        floatText(bb.left+bb.width/2-20, bb.top, rewardParts.join(" "), "#f0c419");
         renderAchievements(); save();
       }
     };

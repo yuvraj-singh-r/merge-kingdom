@@ -82,7 +82,8 @@ function renderDailyQuests(){
       '<div class="prog"><i style="width:'+(val/q.target*100)+'%"></i></div>'+
       '<div class="reward">Reward: '+rewardParts.join(" + ")+'</div></div>'+
       '<button class="claim" '+((complete&&!claimed)?"":"disabled")+'>'+(claimed?"Claimed":"Claim")+'</button>';
-    div.querySelector(".claim").onclick=()=>{
+    const claimBtn=div.querySelector(".claim");
+    claimBtn.onclick=()=>{
       if(complete && !claimed){
         dq.claimed.push(qid);
         state.totalDailyQuestsClaimed=(state.totalDailyQuestsClaimed||0)+1;
@@ -90,6 +91,10 @@ function renderDailyQuests(){
         addGems(q.reward.gems||0);
         addXP(q.reward.xp||0);
         sfx.victory(); toast("🗓️ Daily quest complete: "+q.name+"!");
+        const bb=claimBtn.getBoundingClientRect();
+        burstParticles(bb.left+bb.width/2, bb.top+bb.height/2, "#f0c419", 10);
+        if(q.reward.gems) burstParticles(bb.left+bb.width/2, bb.top+bb.height/2, "#5fb8f5", 8);
+        floatText(bb.left+bb.width/2-16, bb.top, rewardParts.join(" + "), "#f0c419");
         checkAchievements();
         renderDailyQuests(); save();
       }

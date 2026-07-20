@@ -46,6 +46,35 @@ function confettiBurst(){
 }
 
 /* ============================================================
+   RIPPLE EFFECT — one delegated listener covers every button
+   class project-wide. CSS (.ripple-span/@keyframes rippleFx in
+   styles.css) drives the actual animation on the compositor
+   thread; this only measures the click position and appends/
+   removes a span, so it's cheap even on low-end mobile.
+   ============================================================ */
+const RIPPLE_SELECTOR=".royal-btn, .iconbtn, .tabbtn, .lb-cat-btn, .qitem .claim, .card .buy";
+document.addEventListener("pointerdown",(e)=>{
+  const btn=e.target.closest(RIPPLE_SELECTOR);
+  if(!btn || btn.disabled) return;
+  const rect=btn.getBoundingClientRect();
+  const size=Math.max(rect.width,rect.height)*1.6;
+  const span=document.createElement("span");
+  span.className="ripple-span";
+  span.style.width=span.style.height=size+"px";
+  span.style.left=(e.clientX-rect.left-size/2)+"px";
+  span.style.top=(e.clientY-rect.top-size/2)+"px";
+  btn.appendChild(span);
+  span.addEventListener("animationend", ()=>span.remove(), {once:true});
+});
+
+function closeOverlay(overlay, onRemoved){
+  if(!overlay || overlay.dataset.closing) return;
+  overlay.dataset.closing="1";
+  overlay.classList.add("closing");
+  setTimeout(()=>{ overlay.remove(); if(onRemoved) onRemoved(); },220);
+}
+
+/* ============================================================
    MODAL
    ============================================================ */
 function showModal(icon,title,body,extraHtml,onClose){
@@ -53,6 +82,6 @@ function showModal(icon,title,body,extraHtml,onClose){
   overlay.className="overlay";
   overlay.innerHTML='<div class="modal"><div class="bigicon">'+icon+'</div><h2>'+title+'</h2><p>'+body+'</p>'+(extraHtml||"")+'<div style="margin-top:16px;"><button class="royal-btn" id="modalClose">Continue</button></div></div>';
   document.body.appendChild(overlay);
-  overlay.querySelector("#modalClose").onclick=()=>{ overlay.remove(); if(onClose) onClose(); };
+  overlay.querySelector("#modalClose").onclick=()=>{ closeOverlay(overlay); if(onClose) onClose(); };
   return overlay;
 }

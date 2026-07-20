@@ -127,8 +127,7 @@ function openShop(){
 
 function closeShop(){
   if(!shopOverlay) return;
-  shopOverlay.remove();
-  shopOverlay = null;
+  closeOverlay(shopOverlay, ()=>{ shopOverlay=null; });
 }
 
 document.getElementById("btnShop").addEventListener("click", openShop);

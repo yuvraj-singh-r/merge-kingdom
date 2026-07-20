@@ -35,6 +35,7 @@ function discover(item){
   }
 }
 
+let lastMergedTileIndex=null;
 function renderBoard(){
   const board=document.getElementById("board");
   board.innerHTML="";
@@ -43,7 +44,7 @@ function renderBoard(){
     cell.className="cell"; cell.dataset.index=i;
     if(item){
       const tile=document.createElement("div");
-      tile.className="tile"+(item.special?" special":"");
+      tile.className="tile"+(item.special?" special":"")+(i===lastMergedTileIndex?" tile-pop":"");
       tile.dataset.index=i;
       tile.title=nameFor(item);
       tile.textContent=iconFor(item);
@@ -52,6 +53,7 @@ function renderBoard(){
     }
     board.appendChild(cell);
   });
+  lastMergedTileIndex=null;
 }
 
 let dragCtx=null;
@@ -196,9 +198,10 @@ function performMerge(group, landIndex){
   addCoins(coinGain);
   addXP(xpGain);
   sfx.merge();
+  lastMergedTileIndex=landIndex;
   if(rectBox){
     burstParticles(rectBox.left+rectBox.width/2, rectBox.top+rectBox.height/2, "#f0c419", 12);
-    floatText(rectBox.left+rectBox.width/2-10, rectBox.top, "+"+Math.round(coinGain)+"🪙");
+    floatText(rectBox.left+rectBox.width/2-16, rectBox.top, "+"+Math.round(coinGain)+"🪙 +"+Math.round(xpGain)+"xp");
   }
   checkAchievements();
 }

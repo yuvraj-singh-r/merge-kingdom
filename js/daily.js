@@ -50,10 +50,14 @@ function openDailyWheel(){
       addCoins(reward.coins); addXP(reward.xp);
       state.dailyStreak++; state.lastDailyClaim=Date.now();
       sfx.victory(); confettiBurst();
+      const wb=wheel.getBoundingClientRect();
+      burstParticles(wb.left+wb.width/2, wb.top+wb.height/2, "#f0c419", 18);
+      burstParticles(wb.left+wb.width/2, wb.top+wb.height/2, "#fbe28a", 12);
+      floatText(wb.left+wb.width/2-24, wb.top, "+"+reward.coins+"🪙 +"+reward.xp+"xp", "#f0c419");
       checkAchievements(); checkDailyAvailable(); save();
       const modal=overlay.querySelector(".modal");
       modal.innerHTML='<div class="bigicon">🎉</div><h2>You won!</h2><p>+'+reward.coins+' Coins, +'+reward.xp+' XP</p><div style="margin-top:16px;"><button class="royal-btn" id="modalClose2">Nice!</button></div>';
-      overlay.querySelector("#modalClose2").onclick=()=>overlay.remove();
+      overlay.querySelector("#modalClose2").onclick=()=>closeOverlay(overlay);
     },3600);
   };
 }

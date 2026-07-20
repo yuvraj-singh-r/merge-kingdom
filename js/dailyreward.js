@@ -84,6 +84,5 @@ function openDailyRewardPopup(){
 
 function closeDailyRewardPopup(){
   if(!dailyRewardOverlay) return;
-  dailyRewardOverlay.remove();
-  dailyRewardOverlay = null;
+  closeOverlay(dailyRewardOverlay, ()=>{ dailyRewardOverlay=null; });
 }

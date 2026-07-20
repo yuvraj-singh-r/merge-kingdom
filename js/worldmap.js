@@ -151,8 +151,7 @@ function openWorldMap(){
 }
 function closeWorldMap(){
   if(!worldMapOverlay) return;
-  worldMapOverlay.remove();
-  worldMapOverlay=null;
+  closeOverlay(worldMapOverlay, ()=>{ worldMapOverlay=null; });
 }
 
 document.getElementById("btnWorldMap").addEventListener("click", openWorldMap);
