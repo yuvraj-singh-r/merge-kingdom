@@ -48,8 +48,10 @@
   --shadow:0 10px 24px rgba(90,66,20,.18);
 }
 *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
-html{scroll-behavior:smooth;}
+html{scroll-behavior:smooth; touch-action:manipulation; overscroll-behavior:none; height:100%;}
 @media(prefers-reduced-motion:reduce){ html{scroll-behavior:auto;} }
+body{overscroll-behavior:none; -webkit-user-select:none; user-select:none; -webkit-touch-callout:none;}
+input, textarea, [contenteditable]{-webkit-user-select:text; user-select:text; -webkit-touch-callout:default;}
 html,body{height:100%;}
 body{
   margin:0;
@@ -116,7 +118,7 @@ button{font-family:inherit; cursor:pointer;}
     radial-gradient(700px 420px at 50% 18%, rgba(240,196,25,.14), transparent 60%),
     radial-gradient(900px 600px at 50% 95%, rgba(95,184,245,.12), transparent 65%),
     radial-gradient(900px 500px at 50% 20%,#262c5e,var(--bg-0));
-  text-align:center; padding:20px;
+  text-align:center; padding:calc(20px + env(safe-area-inset-top)) calc(20px + env(safe-area-inset-right)) calc(20px + env(safe-area-inset-bottom)) calc(20px + env(safe-area-inset-left));
   opacity:0; transition:opacity .42s ease;
 }
 #startScreen.fade-in{opacity:1; animation:splashIn .6s ease both;}
@@ -153,14 +155,15 @@ button{font-family:inherit; cursor:pointer;}
 .royal-btn:disabled{opacity:.45; cursor:not-allowed; transform:none;}
 
 /* ---------- App shell ---------- */
-#app{display:none; min-height:100vh; flex-direction:column; padding-bottom:14px;}
+#app{display:none; min-height:100vh; flex-direction:column; padding-bottom:calc(14px + env(safe-area-inset-bottom));}
 #app.show{display:flex; animation:appFadeIn .5s ease both;}
 @keyframes appFadeIn{0%{opacity:0;}100%{opacity:1;}}
 
 .topbar{
   position:sticky; top:0; z-index:60;
   display:flex; align-items:center; gap:10px; flex-wrap:wrap;
-  padding:10px 14px; background:linear-gradient(180deg,rgba(18,20,45,.96),rgba(18,20,45,.86));
+  padding:calc(10px + env(safe-area-inset-top)) calc(14px + env(safe-area-inset-right)) 10px calc(14px + env(safe-area-inset-left));
+  background:linear-gradient(180deg,rgba(18,20,45,.96),rgba(18,20,45,.86));
   backdrop-filter:blur(6px);
   border-bottom:1px solid var(--panel-border);
   box-shadow:0 1px 0 rgba(240,196,25,.25);
@@ -502,6 +505,18 @@ button{font-family:inherit; cursor:pointer;}
 .bug-file{width:100%; font-size:12px; color:var(--text-dim);}
 .bug-file-status{font-size:11px; color:var(--emerald); margin-top:4px; min-height:14px;}
 .bug-file-status.bug-file-warn{color:var(--ruby);}
+
+/* ---------- Offline banner (mobile/Capacitor) ---------- */
+.offline-banner{
+  position:fixed; left:12px; right:12px;
+  bottom:calc(12px + env(safe-area-inset-bottom));
+  background:linear-gradient(180deg,var(--ruby),var(--ruby-2));
+  color:#fff; font-size:12px; font-weight:700; text-align:center;
+  padding:10px 14px; border-radius:12px; box-shadow:var(--shadow);
+  z-index:950; transform:translateY(calc(100% + 20px)); opacity:0;
+  transition:transform .3s ease, opacity .3s ease; pointer-events:none;
+}
+.offline-banner.show{transform:translateY(0); opacity:1;}
 
 /* ---------- Leaderboard ---------- */
 .lb-categories{display:flex; flex-wrap:wrap; gap:6px; margin:10px 0;}

@@ -2,7 +2,9 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#131327">
+<meta name="color-scheme" content="dark light">
 <title>Merge Realms</title>
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -200,11 +202,13 @@
 
 <div id="toasts"></div>
 <div id="confettiLayer"></div>
+<div id="offlineBanner" class="offline-banner">📡 You're offline — playing locally. Cloud features will resume when you're back online.</div>
 
 <script src="js/data.js"></script>
 <script src="js/state.js"></script>
 <script src="js/audio.js"></script>
 <script src="js/ui-helpers.js"></script>
+<script src="js/capacitor.js"></script>
 <script src="js/economy.js"></script>
 <script src="js/board.js"></script>
 <script src="js/panels.js"></script>

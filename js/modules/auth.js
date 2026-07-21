@@ -43,6 +43,7 @@ function loginWithGoogle(){
     .catch(function(err){
       console.warn("[auth.js] Google sign-in failed:", err);
       if(typeof toast === "function") toast("Sign-in failed. Please try again.");
+      if(typeof sfx!=="undefined") sfx.error();
       throw err;
     });
 }

@@ -138,6 +138,7 @@ function stopLoadingTips(){ if(loadingTipTimer){ clearInterval(loadingTipTimer);
 
 function finishBoot(){
   stopLoadingTips();
+  if(typeof hideNativeSplash==="function") hideNativeSplash();
   document.getElementById("loading").classList.add("fade");
   setTimeout(()=>{
     document.getElementById("loading").style.display="none";

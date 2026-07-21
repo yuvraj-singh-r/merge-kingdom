@@ -1,0 +1,28 @@
+{
+  "name": "merge-realms",
+  "version": "1.0.0",
+  "description": "Merge Realms — a fantasy merge/idle kingdom-builder, packaged for Android via Capacitor.",
+  "private": true,
+  "scripts": {
+    "cap:add:android": "cap add android",
+    "cap:sync": "cap sync android",
+    "cap:open:android": "cap open android",
+    "cap:run:android": "cap run android",
+    "android:assets": "capacitor-assets generate --android",
+    "serve": "npx http-server . -p 8080 -c-1"
+  },
+  "dependencies": {
+    "@capacitor/android": "^6.1.2",
+    "@capacitor/app": "^6.0.1",
+    "@capacitor/core": "^6.1.2",
+    "@capacitor/keyboard": "^6.0.2",
+    "@capacitor/network": "^6.0.2",
+    "@capacitor/splash-screen": "^6.0.2",
+    "@capacitor/status-bar": "^6.0.1"
+  },
+  "devDependencies": {
+    "@capacitor/assets": "^3.0.5",
+    "@capacitor/cli": "^6.1.2",
+    "http-server": "^14.1.1"
+  }
+}
