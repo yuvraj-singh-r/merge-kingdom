@@ -378,6 +378,23 @@ button{font-family:inherit; cursor:pointer;}
 .statbox .lbl{font-size:11px; color:var(--text-dim); margin-top:2px;}
 
 .settrow{display:flex; align-items:center; justify-content:space-between; padding:10px 0; border-bottom:1px solid var(--panel-border);}
+.settrow-slider{padding-top:0; padding-bottom:14px;}
+.settrow-slider span{font-size:12px; color:var(--text-dim); flex-shrink:0; margin-right:12px;}
+.vol-slider{
+  -webkit-appearance:none; appearance:none; width:100%; max-width:160px; height:6px; border-radius:4px;
+  background:var(--panel-border); cursor:pointer; outline:none;
+}
+.vol-slider::-webkit-slider-thumb{
+  -webkit-appearance:none; appearance:none; width:18px; height:18px; border-radius:50%;
+  background:radial-gradient(circle at 35% 30%, var(--gold-soft), var(--gold-2));
+  box-shadow:0 0 0 2px var(--bg-1), var(--shadow); cursor:pointer;
+}
+.vol-slider::-moz-range-thumb{
+  width:18px; height:18px; border-radius:50%; border:none;
+  background:radial-gradient(circle at 35% 30%, var(--gold-soft), var(--gold-2));
+  box-shadow:0 0 0 2px var(--bg-1), var(--shadow); cursor:pointer;
+}
+.vol-slider::-moz-range-progress{background:var(--gold-2); border-radius:4px; height:6px;}
 .settrow:last-child{border-bottom:none;}
 .switch{width:46px; height:26px; border-radius:20px; background:var(--panel-border); position:relative; border:none; flex-shrink:0;}
 .switch.on{background:var(--emerald);}

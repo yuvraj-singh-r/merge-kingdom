@@ -112,6 +112,7 @@ function loadLeaderboard(){
   }).catch(e=>{
     console.warn("[leaderboard.js] Failed to load leaderboard:",e);
     lbError="Couldn't load the leaderboard. Check your connection and try again.";
+    if(typeof sfx!=="undefined") sfx.error();
   }).finally(()=>{
     lbLoading=false;
     renderLeaderboardPanel();

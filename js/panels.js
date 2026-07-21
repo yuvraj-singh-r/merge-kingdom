@@ -114,7 +114,9 @@ function renderQuests(){
       if(complete && !claimed){
         state.questsClaimed.push(q.id);
         addCoins(q.reward.coins||0); addXP(q.reward.xp||0);
-        sfx.victory(); toast("📜 Quest complete: "+q.name+"!");
+        sfx.victory();
+        if(q.reward.coins) sfx.coin();
+        toast("📜 Quest complete: "+q.name+"!");
         const bb=claimBtn.getBoundingClientRect();
         burstParticles(bb.left+bb.width/2, bb.top+bb.height/2, "#2d9d6f", 10);
         floatText(bb.left+bb.width/2-16, bb.top, "+"+(q.reward.coins||0)+"🪙 +"+(q.reward.xp||0)+"xp", "#2d9d6f");
@@ -145,6 +147,7 @@ function checkAchievements(){
   });
   if(newly.length){
     save();
+    sfx.achievementUnlock();
     newly.forEach(a=>toast("🏆 Achievement ready to claim: "+a.name+"!"));
     const tab=document.getElementById("tab-achievements");
     if(tab && !tab.classList.contains("hidden")) renderAchievements();
@@ -193,7 +196,10 @@ function renderAchievements(){
         addCoins(a.reward.coins||0);
         addGems(a.reward.gems||0);
         addXP(a.reward.xp||0);
-        sfx.victory(); toast("🏆 Achievement claimed: "+a.name+"!");
+        sfx.victory();
+        if(a.reward.coins) sfx.coin();
+        if(a.reward.gems) sfx.gem();
+        toast("🏆 Achievement claimed: "+a.name+"!");
         const bb=btn.getBoundingClientRect();
         confettiBurst();
         burstParticles(bb.left+bb.width/2, bb.top+bb.height/2, "#f0c419", 14);

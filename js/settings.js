@@ -15,6 +15,14 @@ document.getElementById("toggleSound").addEventListener("click",(e)=>{
   applySwitch(e.currentTarget,state.settings.sound);
   save();
 });
+document.getElementById("musicVolumeSlider").addEventListener("input",(e)=>{
+  setMusicVolume(e.target.value/100);
+});
+document.getElementById("musicVolumeSlider").addEventListener("change",()=>{ save(); });
+document.getElementById("sfxVolumeSlider").addEventListener("input",(e)=>{
+  setSfxVolume(e.target.value/100);
+});
+document.getElementById("sfxVolumeSlider").addEventListener("change",()=>{ sfx.click(); save(); });
 document.getElementById("btnDark").addEventListener("click",()=>{ setTheme("dark"); });
 document.getElementById("btnLight").addEventListener("click",()=>{ setTheme("light"); });
 function setTheme(t){

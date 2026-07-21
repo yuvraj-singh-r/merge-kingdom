@@ -90,7 +90,10 @@ function renderDailyQuests(){
         addCoins(q.reward.coins||0);
         addGems(q.reward.gems||0);
         addXP(q.reward.xp||0);
-        sfx.victory(); toast("🗓️ Daily quest complete: "+q.name+"!");
+        sfx.victory();
+        if(q.reward.coins) sfx.coin();
+        if(q.reward.gems) sfx.gem();
+        toast("🗓️ Daily quest complete: "+q.name+"!");
         const bb=claimBtn.getBoundingClientRect();
         burstParticles(bb.left+bb.width/2, bb.top+bb.height/2, "#f0c419", 10);
         if(q.reward.gems) burstParticles(bb.left+bb.width/2, bb.top+bb.height/2, "#5fb8f5", 8);

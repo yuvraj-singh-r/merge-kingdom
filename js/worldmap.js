@@ -52,6 +52,7 @@ function checkIslandUnlocks(){
   });
   if(newly.length){
     save();
+    sfx.islandUnlock();
     newly.forEach(island=>toast("🗺️ "+island.name+" unlocked! Visit the World Map to travel there."));
     if(worldMapOverlay) renderWorldMapPanel();
   }

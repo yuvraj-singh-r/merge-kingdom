@@ -100,7 +100,7 @@ async function saveToCloud(manual) {
     return true;
   } catch (e) {
     console.warn("[cloudsave.js] saveToCloud failed:", e);
-    if (manual && typeof toast === "function") toast("☁️ Cloud save failed. Please try again.");
+    if (manual && typeof toast === "function") { toast("☁️ Cloud save failed. Please try again."); if(typeof sfx!=="undefined") sfx.error(); }
     return false;
   } finally {
     cloudSyncInFlight = false;

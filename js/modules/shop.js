@@ -69,6 +69,7 @@ let shopOverlay = null;
    the file header. Buying is not required for this step.
    ---------------------------------------------------------------- */
 function purchaseItem(item){
+  sfx.click();
   if(typeof toast==="function") toast("🛍️ Purchases are coming soon!");
 }
 

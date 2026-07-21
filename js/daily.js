@@ -49,7 +49,7 @@ function openDailyWheel(){
       const reward=DAILY_TABLE[idx];
       addCoins(reward.coins); addXP(reward.xp);
       state.dailyStreak++; state.lastDailyClaim=Date.now();
-      sfx.victory(); confettiBurst();
+      sfx.dailyReward(); sfx.victory(); confettiBurst();
       const wb=wheel.getBoundingClientRect();
       burstParticles(wb.left+wb.width/2, wb.top+wb.height/2, "#f0c419", 18);
       burstParticles(wb.left+wb.width/2, wb.top+wb.height/2, "#fbe28a", 12);

@@ -213,6 +213,7 @@ function tapTile(index){
     const sp=SPECIALS.find(s=>s.id===item.special);
     addCoins(sp.coins); addXP(sp.xp);
     discover(item);
+    sfx.chestOpen();
     const rect=document.querySelector('.cell[data-index="'+index+'"]');
     if(rect){ const rb=rect.getBoundingClientRect(); burstParticles(rb.left+rb.width/2, rb.top+rb.height/2, "#8e6bd8", 16); floatText(rb.left+rb.width/2-20, rb.top, "+"+sp.coins+"🪙 +"+sp.xp+"XP", "#8e6bd8"); }
     toast("✨ You opened the "+sp.name+"!");

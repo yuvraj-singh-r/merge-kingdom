@@ -76,6 +76,9 @@ function beginGame(){
   document.documentElement.setAttribute("data-theme", state.settings.theme==="light"?"light":"");
   applySwitch(document.getElementById("toggleMusic"), state.settings.music);
   applySwitch(document.getElementById("toggleSound"), state.settings.sound);
+  document.getElementById("musicVolumeSlider").value=Math.round((state.settings.musicVolume!==undefined?state.settings.musicVolume:0.35)*100);
+  document.getElementById("sfxVolumeSlider").value=Math.round((state.settings.sfxVolume!==undefined?state.settings.sfxVolume:0.7)*100);
+  applyVolumeSettings();
   applyOfflineEarnings();
   trackDaysPlayed();
   fullRender();
