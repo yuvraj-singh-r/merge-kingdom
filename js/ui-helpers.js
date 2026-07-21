@@ -52,7 +52,7 @@ function confettiBurst(){
    thread; this only measures the click position and appends/
    removes a span, so it's cheap even on low-end mobile.
    ============================================================ */
-const RIPPLE_SELECTOR=".royal-btn, .iconbtn, .tabbtn, .lb-cat-btn, .qitem .claim, .card .buy";
+const RIPPLE_SELECTOR=".royal-btn, .iconbtn, .tabbtn, .lb-cat-btn, .qitem .claim, .card .buy, .settrow-link";
 document.addEventListener("pointerdown",(e)=>{
   const btn=e.target.closest(RIPPLE_SELECTOR);
   if(!btn || btn.disabled) return;
