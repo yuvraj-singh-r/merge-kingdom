@@ -4,12 +4,14 @@
   "description": "Merge Realms — a fantasy merge/idle kingdom-builder, packaged for Android via Capacitor.",
   "private": true,
   "scripts": {
-    "cap:add:android": "cap add android",
-    "cap:sync": "cap sync android",
-    "cap:open:android": "cap open android",
-    "cap:run:android": "cap run android",
+    "prepare:www": "node scripts/prepare-www.js",
+    "cap:add:android": "npm run prepare:www && cap add android",
+    "cap:sync": "npm run prepare:www && cap sync android",
+    "cap:open:android": "npm run prepare:www && cap open android",
+    "cap:run:android": "npm run prepare:www && cap run android",
     "android:assets": "capacitor-assets generate --android",
-    "serve": "npx http-server . -p 8080 -c-1"
+    "serve": "npx http-server . -p 8080 -c-1",
+    "serve:www": "npm run prepare:www && npx http-server www -p 8080 -c-1"
   },
   "dependencies": {
     "@capacitor/android": "^6.1.2",

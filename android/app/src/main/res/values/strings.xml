@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Merge Realms</string>
+    <string name="title_activity_main">Merge Realms</string>
+    <string name="package_name">com.mergerealms.app</string>
+    <string name="custom_url_scheme">com.mergerealms.app</string>
+</resources>

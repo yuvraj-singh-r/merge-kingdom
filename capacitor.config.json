@@ -1,7 +1,7 @@
 {
   "appId": "com.mergerealms.app",
   "appName": "Merge Realms",
-  "webDir": ".",
+  "webDir": "www",
   "bundledWebRuntime": false,
   "backgroundColor": "#0d0e1f",
   "android": {
