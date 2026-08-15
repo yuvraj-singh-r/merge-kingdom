@@ -164,41 +164,45 @@ function createItemVisual(item){
    ============================================================ */
 
 function renderBoard(){
-
-  const board=
-    document.getElementById("board");
-
+  const board=document.getElementById("board");
   board.innerHTML="";
 
   state.board.forEach((item,i)=>{
-
-    const cell=
-      document.createElement("div");
-
+    const cell=document.createElement("div");
     cell.className="cell";
     cell.dataset.index=i;
 
     if(item){
+      const tile=document.createElement("div");
 
-      const tile=
-        document.createElement("div");
-
-      tile.className=
-        "tile"+
-        (item.special?" special":"");
-
+      tile.className="tile"+(item.special?" special":"");
       tile.dataset.index=i;
       tile.title=nameFor(item);
 
-      tile.appendChild(
-        createItemVisual(item)
-      );
+      if(!item.special && CHAINS[item.chain] && CHAINS[item.chain].tiers[item.tier]){
+        const tier = CHAINS[item.chain].tiers[item.tier];
 
-      tile.addEventListener(
-        "pointerdown",
-        onTilePointerDown
-      );
+        if(tier.image){
+          const img = document.createElement("img");
 
+          img.src = tier.image;
+          img.alt = tier.name;
+          img.draggable = false;
+
+          img.style.width = "100%";
+          img.style.height = "100%";
+          img.style.objectFit = "contain";
+          img.style.pointerEvents = "none";
+
+          tile.appendChild(img);
+        } else {
+          tile.textContent = tier.icon || "❓";
+        }
+      } else {
+        tile.textContent = iconFor(item);
+      }
+
+      tile.addEventListener("pointerdown", onTilePointerDown);
       cell.appendChild(tile);
     }
 
