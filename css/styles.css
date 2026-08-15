@@ -603,3 +603,11 @@ footer.credits{text-align:center; color:var(--text-dim); font-size:11px; padding
 .auth-email{font-size:11px; color:var(--text-dim); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:180px;}
 .auth-btn{padding:7px 14px; font-size:12px;}
 .cloud-status{font-size:11px; color:var(--text-dim); white-space:nowrap;}
+
+.tile img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  pointer-events:none;
+  user-select:none;
+}
