@@ -237,20 +237,43 @@ function updateSpawnerUI(){
   }
   renderQueue();
 }
-function renderQueue(){
-  const row=document.getElementById("queueRow");
-  row.innerHTML="";
-  const cap=queueCapacity();
-  for(let i=0;i<cap;i++){
-    const slot=document.createElement("div");
-    slot.className="qslot"+(state.queue[i]?" filled":"");
-    if(state.queue[i]){
-      slot.textContent=iconFor(state.queue[i]);
-      slot.dataset.qindex=i;
-      slot.addEventListener("pointerdown", onQueuePointerDown);
+function renderBoard(){
+  const board=document.getElementById("board");
+  board.innerHTML="";
+
+  state.board.forEach((item,i)=>{
+    const cell=document.createElement("div");
+    cell.className="cell";
+    cell.dataset.index=i;
+
+    if(item){
+      const tile=document.createElement("div");
+      tile.className="tile"+(item.special?" special":"");
+      tile.dataset.index=i;
+      tile.title=nameFor(item);
+
+      if(!item.special && CHAINS[item.chain] && CHAINS[item.chain].tiers[item.tier]){
+        const tier=CHAINS[item.chain].tiers[item.tier];
+
+        if(tier.image){
+          const img=document.createElement("img");
+          img.src=tier.image;
+          img.alt=tier.name;
+          img.draggable=false;
+          tile.appendChild(img);
+        }else{
+          tile.textContent=tier.icon || "❓";
+        }
+      }else{
+        tile.textContent=iconFor(item);
+      }
+
+      tile.addEventListener("pointerdown",onTilePointerDown);
+      cell.appendChild(tile);
     }
-    row.appendChild(slot);
-  }
+
+    board.appendChild(cell);
+  });
 }
 function onQueuePointerDown(e){
   e.preventDefault();
