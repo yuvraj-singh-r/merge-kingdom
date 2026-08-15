@@ -327,3 +327,42 @@ function collectSpawn(){
   renderQueue(); updateSpawnerUI(); save();
   if(item.special) toast("✨ A rare treasure appeared!");
 }
+/* ============================================================
+   HOLDING QUEUE / SPAWNER FIX
+   ============================================================ */
+
+function initSpawnerAndQueue(){
+  const spawner = document.getElementById("spawner");
+
+  if(!spawner){
+    console.error("Spawner element not found");
+    return;
+  }
+
+  // Make spawner clearly clickable
+  spawner.style.cursor = "pointer";
+
+  // Remove old click listener by replacing element
+  const newSpawner = spawner.cloneNode(true);
+  spawner.parentNode.replaceChild(newSpawner, spawner);
+
+  newSpawner.addEventListener("click", function(){
+    if(!state.spawnReady){
+      toast("⏳ Spawner is still charging!");
+      return;
+    }
+
+    collectSpawn();
+  });
+
+  // Always show current queue
+  updateSpawnerUI();
+  renderQueue();
+}
+
+// Initialize after page is ready
+if(document.readyState === "loading"){
+  document.addEventListener("DOMContentLoaded", initSpawnerAndQueue);
+}else{
+  initSpawnerAndQueue();
+}
